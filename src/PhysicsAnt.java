@@ -1,90 +1,59 @@
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 
-public class Player extends Entity {
 
+public class PhysicsAnt extends Entity{    
+    
     GameEngine gameEngine;
     KeyHandler keyHandler;
-
     
-
-    public Player(GameEngine gameEngine, KeyHandler keyHandler){
-        this.gameEngine = gameEngine;
-        this.keyHandler = keyHandler;
+    
+    public PhysicsAnt(GameEngine gameEngine, KeyHandler keyHandler){
+        this.gameEngine=gameEngine;
+        this.keyHandler=keyHandler;
 
         setDefaultValues();
-        getPlayerImage();
-
-
-
+        getSpriteImage();
     }
 
     public void setDefaultValues(){
-        x = 100;
-        y = 100;
+        x= 200;
+        y = 10;
+        direction = "left";
+        ySpeed = 0;
         speed = 2;
-        direction = "down";
     }
-
     public void updateState(){
-
-        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed){
-            if (keyHandler.upPressed == true){
-                if(keyHandler.leftPressed == true){
-                    direction = "upLeft";
-                    x -= speed;
-                }
-                else if (keyHandler.rightPressed == true){
-                    direction = "upRight";
-                    x += speed;
-                }
-                else {
-                    direction = "up";
-                }
-                y -= speed;
-            }
-            else if (keyHandler.downPressed == true){
-                if(keyHandler.leftPressed == true){
-                    direction = "downLeft";
-                    x -= speed;
-                }
-                else if (keyHandler.rightPressed == true){
-                    direction = "downRight";
-                    x += speed;
-                }
-                else {
-                    direction = "down";
-                }
-                
-                y += speed;
-            }
-            else if (keyHandler.rightPressed == true){
-                direction = "right";
-                x += speed;
-            }
-            else if (keyHandler.leftPressed == true){
-                direction = "left";
-                x -= speed;
-                
-            }
-    
-                //This updates the images associated with a sprite ever 10 iterations of update method
-            spriteCounter++;
-            if(spriteCounter>15){
-                if(spriteNumber == 1){
-                    spriteNumber = 2;
-                }
-                else if(spriteNumber == 2){
-                    spriteNumber = 1;
-                }
-                spriteCounter = 0;
-            }
+        if (keyHandler.rightPressed == true){
+            direction = "right";
+            x += speed;
         }
+        else if (keyHandler.leftPressed == true){
+            direction = "left";
+            x -= speed;
+            
+        }
+        
+        if (y<gameEngine.screenHeight-16){
+            physicsCounter++;
+            ySpeed = ySpeed+physicsCounter/60;
+            y = y+ySpeed;
+        }
+
+        spriteCounter++;
+        if(spriteCounter>15){
+            if(spriteNumber == 1){
+                spriteNumber = 2;
+            }
+            else if(spriteNumber == 2){
+                spriteNumber = 1;
+            }
+            spriteCounter = 0;
+        }
+
         //Clamps position to within bounds of screen
         if (x < 0){
             x=0;
@@ -97,12 +66,13 @@ public class Player extends Entity {
         }
         if (y>gameEngine.screenHeight-16){
             y = gameEngine.screenHeight-16;
+            ySpeed = 0;
+            physicsCounter = 0;
         }
-        
 
     }
 
-    public void getPlayerImage(){
+    public void getSpriteImage(){
         try {
             up1 = (BufferedImage) ImageIO.read(new File("images/PlayerBlueAnt/AntUp.png"));
             up2 = (BufferedImage) ImageIO.read(new File("images/PlayerBlueAnt/AntUp2.png"));
@@ -129,9 +99,7 @@ public class Player extends Entity {
             
             
         }
-
     }
-
 
     public void draw(Graphics2D g2){
         BufferedImage image = null;
@@ -210,11 +178,6 @@ public class Player extends Entity {
         //g2.setColor(Color.white);
         //g2.drawRect(x, y, gameEngine.tileSize, gameEngine.tileSize);
         g2.drawImage(image, x, y, gameEngine.tileSize/2, gameEngine.tileSize/2, null);
-        
-
-
-       
-
     }
 
 }

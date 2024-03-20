@@ -1,5 +1,4 @@
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,12 +10,12 @@ import javax.imageio.ImageIO;
 public class RedAnt extends Entity{
 
     GameEngine gameEngine;
-    KeyHandler keyHandler;
+    //KeyHandler keyHandler;
 
 
     public RedAnt(GameEngine gameEngine, KeyHandler keyHandler){
         this.gameEngine=gameEngine;
-        this.keyHandler=keyHandler;
+        //this.keyHandler=keyHandler;
 
         setDefaultValues();
         getSpriteImage();
@@ -28,7 +27,7 @@ public class RedAnt extends Entity{
     public void setDefaultValues(){
         x = 100;
         y = 100;
-        speed = 3;
+        speed = 2;
         direction = "down";
     }
 
@@ -96,7 +95,7 @@ public class RedAnt extends Entity{
         spriteCounter = 0;
         }
         directionChangeCounter++;
-        if(directionChangeCounter>20){
+        if(directionChangeCounter>14){
             this.direction = pickDirection();
             directionChangeCounter=0;
         }   
@@ -104,7 +103,7 @@ public class RedAnt extends Entity{
                 //This updates the images associated with a sprite ever 12 iterations of update method
             
         
-
+        //Clamps position to within bounds of screen
         if (x < 0){
             x=0;
         }

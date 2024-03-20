@@ -1,4 +1,4 @@
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,11 +10,11 @@ import javax.imageio.ImageIO;
 
 public class GreenAnt extends Entity{
     GameEngine gameEngine;
-    KeyHandler keyHandler;
+    //KeyHandler keyHandler;
 
     public GreenAnt(GameEngine gameEngine, KeyHandler keyHandler){
         this.gameEngine=gameEngine;
-        this.keyHandler=keyHandler;
+        //this.keyHandler=keyHandler;
 
         setDefaultValues();
         getSpriteImage();
@@ -98,7 +98,7 @@ public class GreenAnt extends Entity{
                 //This updates the images associated with a sprite ever 12 iterations of update method
             
         
-
+        //Clamps position to within bounds of screen
         if (x < 0){
             x=0;
         }

@@ -31,6 +31,8 @@ public class GameEngine extends JPanel implements Runnable{
     GreenAnt greenAnt2 = new GreenAnt(this, keyHandler);
     GreenAnt greenAnt3 = new GreenAnt(this, keyHandler);
     GreenAnt greenAnt4 = new GreenAnt(this, keyHandler);
+
+    PhysicsAnt physicsAnt = new PhysicsAnt(this, keyHandler);
     
     
 
@@ -108,6 +110,7 @@ public class GameEngine extends JPanel implements Runnable{
         greenAnt2.updateState();
         greenAnt3.updateState();
         greenAnt4.updateState();
+        physicsAnt.updateState();
 
     }
 
@@ -125,6 +128,7 @@ public class GameEngine extends JPanel implements Runnable{
         greenAnt2.draw(g2);
         greenAnt3.draw(g2);
         greenAnt4.draw(g2);
+        physicsAnt.draw(g2);
 
     }
 
