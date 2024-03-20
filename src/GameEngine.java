@@ -40,7 +40,7 @@ public class GameEngine extends JPanel implements Runnable{
 
     public GameEngine(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.darkGray);
         this.setDoubleBuffered(true);
         //The KeyHandler class defines a key listener, we then add that to the game engine
         this.addKeyListener(keyHandler);
