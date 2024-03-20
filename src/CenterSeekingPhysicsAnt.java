@@ -6,28 +6,35 @@ public class CenterSeekingPhysicsAnt extends PhysicsAnt{
 
 
     }
+    public void setDefaultValues(){
+        x = 200;
+        y = 100;
+        direction = "left";
+        
+    }
 
     public void updateState(){
-        if (y<(gameEngine.screenHeight-16)/2){
-            physicsCounter++;
-            ySpeed = ySpeed+(physicsCounter/60);
-            y = y+ySpeed;
-            if(y>(gameEngine.screenHeight-16)/2){
-                //System.out.println("y speed" + ySpeed);
-                physicsCounter = 0;
+        
+        physicsCounter++;
+
+        if(physicsCounter>1){
+            
+            if (y<(gameEngine.screenHeight-16)/2){  
+                ySpeed++;          
+                y = y+ySpeed;
+            } 
+            else if(y>(gameEngine.screenHeight-16)/2){
+                ySpeed--;
+                y = y+ySpeed;
             }
-        }        
-        else if(y>(gameEngine.screenHeight-16)/2){
-            physicsCounter++;
-            ySpeed = ySpeed-(physicsCounter/60);
-            y = y+ySpeed;
-            //System.out.println("Decelerating");
-            if(y<(gameEngine.screenHeight-16)/2){
-                physicsCounter = 0;
-            }
-        }
+            else{
+                y = y+ySpeed;
+            }            
+            physicsCounter=0;
+        } 
 
         spriteCounter++;
+
         if(spriteCounter>15){
             if(spriteNumber == 1){
                 spriteNumber = 2;

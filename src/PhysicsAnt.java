@@ -20,13 +20,14 @@ public class PhysicsAnt extends Entity{
     }
 
     public void setDefaultValues(){
-        x= 200;
+        x= 500;
         y = 10;
         direction = "left";
         ySpeed = 0;
         speed = 2;
     }
     public void updateState(){
+
         if (keyHandler.rightPressed == true){
             direction = "right";
             x += speed;
@@ -36,12 +37,11 @@ public class PhysicsAnt extends Entity{
             x -= speed;
             
         }
-        
-        if (y<gameEngine.screenHeight-16){
-            physicsCounter++;
-            ySpeed = ySpeed+physicsCounter/60;
+        //This bit does the gravity physics
+        if (y<(gameEngine.screenHeight-16)){  
+            ySpeed++;          
             y = y+ySpeed;
-        }
+        } 
 
         spriteCounter++;
         if(spriteCounter>15){
@@ -68,7 +68,7 @@ public class PhysicsAnt extends Entity{
             y = gameEngine.screenHeight-16;
             //System.out.println("Final ySpeed: " + ySpeed);
             ySpeed = 0;
-            physicsCounter = 0;
+           
         }
 
     }
