@@ -66,6 +66,7 @@ public class PhysicsAnt extends Entity{
         }
         if (y>gameEngine.screenHeight-16){
             y = gameEngine.screenHeight-16;
+            System.out.println("Final ySpeed: " + ySpeed);
             ySpeed = 0;
             physicsCounter = 0;
         }
