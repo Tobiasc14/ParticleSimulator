@@ -20,16 +20,19 @@ public class CenterSeekingPhysicsAnt extends PhysicsAnt{
         if(physicsCounter>1){
             
             if (y<(gameEngine.screenHeight-16)/2){  
-                ySpeed++;          
-                y = y+ySpeed;
+                ySpeed++; 
             } 
             else if(y>(gameEngine.screenHeight-16)/2){
                 ySpeed--;
-                y = y+ySpeed;
-            }
-            else{
-                y = y+ySpeed;
             }            
+            if(x<(gameEngine.screenWidth-16)/2){
+                xSpeed++;
+            }  
+            else if(x>(gameEngine.screenWidth-16)/2){
+                xSpeed--;                
+            }            
+            x = x+xSpeed; 
+            y = y+ySpeed;        
             physicsCounter=0;
         } 
 
@@ -54,6 +57,8 @@ public class CenterSeekingPhysicsAnt extends PhysicsAnt{
         }
         if (x>gameEngine.screenWidth-16){
             x=gameEngine.screenWidth-16;
+            xSpeed = 0;
+            physicsCounter = 0;
         }
         if (y>gameEngine.screenHeight-16){
             y = gameEngine.screenHeight-16;

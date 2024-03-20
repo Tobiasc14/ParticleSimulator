@@ -24,6 +24,7 @@ public class PhysicsAnt extends Entity{
         y = 10;
         direction = "left";
         ySpeed = 0;
+        xSpeed = 0;
         speed = 2;
     }
     public void updateState(){
@@ -71,7 +72,7 @@ public class PhysicsAnt extends Entity{
         }
         if (y>gameEngine.screenHeight-16){
             y = gameEngine.screenHeight-16;
-            //System.out.println("Final ySpeed: " + ySpeed);
+            System.out.println("Final ySpeed: " + ySpeed);
             ySpeed = 0;
            
         }
