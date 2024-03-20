@@ -38,15 +38,21 @@ public class PhysicsAnt extends Entity{
             x -= speed;
             
         }
+       if ((keyHandler.upPressed == true | keyHandler.spacePressed == true) & y>=gameEngine.screenHeight-18){
+            direction = "up";
+            ySpeed = -30;
+        }
         //This bit does the gravity physics
         physicsCounter++;
         if(physicsCounter > 1){
             if (y<(gameEngine.screenHeight-16)){  
-                ySpeed++;          
-                y = y+ySpeed;
+                ySpeed=ySpeed+1;          
+                
             } 
+            
             physicsCounter = 0;
         }
+        y = y+ySpeed;
         
 
         spriteCounter++;

@@ -33,7 +33,7 @@ public class GameEngine extends JPanel implements Runnable{
     GreenAnt greenAnt4 = new GreenAnt(this, keyHandler);
 
     CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
-    PhysicsAnt testPhysicsAnt = new PhysicsAnt(this, keyHandler);
+    PhysicsAnt physicsAnt = new PhysicsAnt(this, keyHandler);
     
 
 
@@ -47,6 +47,7 @@ public class GameEngine extends JPanel implements Runnable{
         //The KeyHandler class defines a key listener, we then add that to the game engine
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+        
         
 
 
@@ -67,6 +68,8 @@ public class GameEngine extends JPanel implements Runnable{
        //Draw count is the number of frames drawn
        long timer = 0;
        int drawCount = 0;
+
+      
       
 
 
@@ -110,8 +113,8 @@ public class GameEngine extends JPanel implements Runnable{
         greenAnt2.updateState();
         greenAnt3.updateState();
         greenAnt4.updateState();
-        centerPhysicsAnt.updateState();
-        testPhysicsAnt.updateState();
+        physicsAnt.updateState();
+        
 
     }
 
@@ -129,8 +132,8 @@ public class GameEngine extends JPanel implements Runnable{
         greenAnt2.draw(g2);
         greenAnt3.draw(g2);
         greenAnt4.draw(g2);
-        centerPhysicsAnt.draw(g2);
-        testPhysicsAnt.draw(g2);    
+        physicsAnt.draw(g2);
+          
 
     }
 
