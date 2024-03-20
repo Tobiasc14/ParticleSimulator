@@ -40,7 +40,7 @@ public class PhysicsAnt extends Entity{
         }
        if ((keyHandler.upPressed == true | keyHandler.spacePressed == true) & y>=gameEngine.screenHeight-18){
             direction = "up";
-            ySpeed = -30;
+            ySpeed = -12;
         }
         //This bit does the gravity physics
         physicsCounter++;
