@@ -38,10 +38,15 @@ public class PhysicsAnt extends Entity{
             
         }
         //This bit does the gravity physics
-        if (y<(gameEngine.screenHeight-16)){  
-            ySpeed++;          
-            y = y+ySpeed;
-        } 
+        physicsCounter++;
+        if(physicsCounter > 1){
+            if (y<(gameEngine.screenHeight-16)){  
+                ySpeed++;          
+                y = y+ySpeed;
+            } 
+            physicsCounter = 0;
+        }
+        
 
         spriteCounter++;
         if(spriteCounter>15){
