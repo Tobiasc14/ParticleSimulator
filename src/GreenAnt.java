@@ -12,16 +12,16 @@ public class GreenAnt extends Entity{
     GameEngine gameEngine;
     //KeyHandler keyHandler;
 
-    public GreenAnt(GameEngine gameEngine, KeyHandler keyHandler){
+    public GreenAnt(GameEngine gameEngine){
         this.gameEngine=gameEngine;
         //this.keyHandler=keyHandler;
-
+        defaultSpeed = 1;
         setDefaultValues();
         getSpriteImage();
     }
     public void setDefaultValues(){
-        x = 100;
-        y = 100;
+        x = 500;
+        y = 200;
         speed = 1;
         direction = "down";
     }
@@ -49,68 +49,76 @@ public class GreenAnt extends Entity{
     }
 
     public void updateState(){
-
-        if (this.direction.equals("upLeft")){
-            x -= speed;
-            y -= speed;
-        }
-        else if(this.direction.equals("upRight")){
-            x += speed;
-            y -= speed;
-        }
-        else if(this.direction.equals("downLeft")){
-            x -= speed;
-            y += speed;
-        }
-        else if(this.direction.equals("downRight")){
-            x += speed;
-            y += speed;
-        }
-        else if(this.direction.equals("up")){
-            y -= speed;
-        }
-        else if(this.direction.equals("down")){
-            y += speed;
-        }
-        else if(this.direction.equals("left")){
-            x -= speed;
-        }
-        else if(this.direction.equals("right")){
-            x += speed;
-        }
-        spriteCounter++;
-        if(spriteCounter>18){
-            
-            if(spriteNumber == 1){
-                spriteNumber = 2;
-            }
-            else if(spriteNumber == 2){
-                spriteNumber = 1;
-            }
-        spriteCounter = 0;
-        }
-        directionChangeCounter++;
-        if(directionChangeCounter>30){
-            this.direction = pickDirection();
-            directionChangeCounter=0;
-        }   
-    
-                //This updates the images associated with a sprite ever 12 iterations of update method
-            
         
-        //Clamps position to within bounds of screen
-        if (x < 0){
-            x=0;
+        pauseCounter++;
+        if (pauseCounter > 50){
+            randomPause(0.1);
+            pauseCounter = 0;
         }
-        if (y < 0){
-            y = 0;
+        if (speed != 0){
+            if (this.direction.equals("upLeft")){
+                x -= speed;
+                y -= speed;
+            }
+            else if(this.direction.equals("upRight")){
+                x += speed;
+                y -= speed;
+            }
+            else if(this.direction.equals("downLeft")){
+                x -= speed;
+                y += speed;
+            }
+            else if(this.direction.equals("downRight")){
+                x += speed;
+                y += speed;
+            }
+            else if(this.direction.equals("up")){
+                y -= speed;
+            }
+            else if(this.direction.equals("down")){
+                y += speed;
+            }
+            else if(this.direction.equals("left")){
+                x -= speed;
+            }
+            else if(this.direction.equals("right")){
+                x += speed;
+            }
+            spriteCounter++;
+            if(spriteCounter>18){
+                
+                if(spriteNumber == 1){
+                    spriteNumber = 2;
+                }
+                else if(spriteNumber == 2){
+                    spriteNumber = 1;
+                }
+            spriteCounter = 0;
+            }
+            directionChangeCounter++;
+            if(directionChangeCounter>30){
+                this.direction = pickDirection();
+                directionChangeCounter=0;
+            }   
+        
+                    //This updates the images associated with a sprite ever 12 iterations of update method
+                
+            
+            //Clamps position to within bounds of screen
+            if (x < 0){
+                x=0;
+            }
+            if (y < 0){
+                y = 0;
+            }
+            if (x>gameEngine.screenWidth-16){
+                x=gameEngine.screenWidth-16;
+            }
+            if (y>gameEngine.screenHeight-16){
+                y = gameEngine.screenHeight-16;
+            }
         }
-        if (x>gameEngine.screenWidth-16){
-            x=gameEngine.screenWidth-16;
-        }
-        if (y>gameEngine.screenHeight-16){
-            y = gameEngine.screenHeight-16;
-        }
+        
         
 
     }

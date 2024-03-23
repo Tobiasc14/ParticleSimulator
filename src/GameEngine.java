@@ -16,24 +16,20 @@ public class GameEngine extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
     
-    int FPS = 60;
-
+    
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
+    
+    //Adds entities
     Player player = new Player(this, keyHandler);
-    RedAnt redAnt = new RedAnt(this, keyHandler);
-    RedAnt redAnt1 = new RedAnt(this, keyHandler);
-    RedAnt redAnt2 = new RedAnt(this, keyHandler);
-    RedAnt redAnt3 = new RedAnt(this, keyHandler);
-    RedAnt redAnt4 = new RedAnt(this, keyHandler);
-    GreenAnt greenAnt = new GreenAnt(this, keyHandler);
-    GreenAnt greenAnt1 = new GreenAnt(this, keyHandler);
-    GreenAnt greenAnt2 = new GreenAnt(this, keyHandler);
-    GreenAnt greenAnt3 = new GreenAnt(this, keyHandler);
-    GreenAnt greenAnt4 = new GreenAnt(this, keyHandler);
+    public Entity [] entityList = new Entity[40];
+    
+    int FPS = 60;  
+    
 
-    CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
-    PhysicsAnt physicsAnt = new PhysicsAnt(this, keyHandler);
+
+    //CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
+    //PhysicsAnt physicsAnt = new PhysicsAnt(this, keyHandler);
     
 
 
@@ -47,6 +43,15 @@ public class GameEngine extends JPanel implements Runnable{
         //The KeyHandler class defines a key listener, we then add that to the game engine
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+
+        for (int i =0; i < entityList.length; i++){
+            if (i<30){
+                entityList[i] = new GreenAnt(this);
+            }
+            if (i > 28){
+                entityList[i] = new RedAnt(this);
+            }
+        }
         
         
 
@@ -103,17 +108,11 @@ public class GameEngine extends JPanel implements Runnable{
 
     public void updateState(){
         player.updateState();
-        redAnt.updateState();
-        redAnt1.updateState();
-        redAnt2.updateState();
-        redAnt3.updateState();
-        redAnt4.updateState();
-        greenAnt.updateState();
-        greenAnt1.updateState();
-        greenAnt2.updateState();
-        greenAnt3.updateState();
-        greenAnt4.updateState();
-        physicsAnt.updateState();
+        for (int i = 0; i < entityList.length; i++){
+            entityList[i].updateState();
+        }
+        //physicsAnt.updateState();
+        //centerPhysicsAnt.updateState();
         
 
     }
@@ -122,17 +121,11 @@ public class GameEngine extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         player.draw(g2);
-        redAnt.draw(g2);
-        redAnt1.draw(g2);
-        redAnt2.draw(g2);
-        redAnt3.draw(g2);
-        redAnt4.draw(g2);
-        greenAnt.draw(g2);
-        greenAnt1.draw(g2);
-        greenAnt2.draw(g2);
-        greenAnt3.draw(g2);
-        greenAnt4.draw(g2);
-        physicsAnt.draw(g2);
+        for (int i = 0; i < entityList.length; i++){
+            entityList[i].draw(g2);
+        }
+        //physicsAnt.draw(g2);
+        //centerPhysicsAnt.draw(g2);
           
 
     }

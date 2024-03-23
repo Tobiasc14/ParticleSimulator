@@ -1,6 +1,8 @@
 
 public class CenterSeekingPhysicsAnt extends PhysicsAnt{
 
+    
+    
     public CenterSeekingPhysicsAnt(GameEngine gameEngine, KeyHandler keyHandler){
         super(gameEngine, keyHandler);
 
