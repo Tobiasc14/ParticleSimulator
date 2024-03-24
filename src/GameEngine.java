@@ -24,7 +24,7 @@ public class GameEngine extends JPanel implements Runnable{
     //Adds entities
     Player player = new Player(this, keyHandler);
     public Entity [] entityList = new Entity[40];
-    PhysicsAnt physAnt = new PhysicsAnt(this, keyHandler);
+    //PhysicsAnt physAnt = new PhysicsAnt(this, keyHandler);
     CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
     int FPS = 60;  
     
@@ -101,8 +101,8 @@ public class GameEngine extends JPanel implements Runnable{
         for (int i = 0; i < entityList.length; i++){
             entityList[i].updateState();
         }
-        physAnt.updateState();
-        //centerPhysicsAnt.updateState();
+        //physAnt.updateState();
+        centerPhysicsAnt.updateState();
         
 
     }
@@ -114,8 +114,8 @@ public class GameEngine extends JPanel implements Runnable{
         for (int i = 0; i < entityList.length; i++){
             entityList[i].draw(g2);
         }
-        physAnt.draw(g2);
-        //centerPhysicsAnt.draw(g2);
+        //physAnt.draw(g2);
+        centerPhysicsAnt.draw(g2);
           
 
     }

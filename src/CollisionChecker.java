@@ -41,9 +41,6 @@ public class CollisionChecker {
         entity.setBounds();
 
     }
-
-
-
     public void entityCheckCollision(Entity entity){
         entity.hittingSomething = false;
         switch(entity.direction){

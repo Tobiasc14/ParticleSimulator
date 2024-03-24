@@ -14,7 +14,7 @@ public class Player extends Ant {
 
 
     public Player(GameEngine gameEngine, KeyHandler keyHandler){
-       super(gameEngine);
+        super(gameEngine);
         this.keyHandler = keyHandler;
         
         setDefaultValues();
