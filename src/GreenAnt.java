@@ -169,8 +169,7 @@ public class GreenAnt extends Entity{
             }
             if(spriteNumber == 2){
                 image = upLeft2;
-            }
-            
+            }           
             break;            
         case "upRight":
             if(spriteNumber == 1){
