@@ -9,10 +9,10 @@ public class GameEngine extends JPanel implements Runnable{
 
     //Below if for if we want our game to have distinct "tile" spaces
     final int originalTileSize = 16;
-    final int scale = 2;
+    final int scale = 1;
     public final int tileSize = originalTileSize * scale; //32 pixel by 32 pixel tiles
-    public final int maxScreenCol = 40;
-    public final int maxScreenRow = 30;
+    public final int maxScreenCol = 80;
+    public final int maxScreenRow = 60;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
     
@@ -23,7 +23,8 @@ public class GameEngine extends JPanel implements Runnable{
     //Adds entities
     Player player = new Player(this, keyHandler);
     public Entity [] entityList = new Entity[40];
-    
+    PhysicsAnt physAnt = new PhysicsAnt(this, keyHandler);
+    CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
     int FPS = 60;  
     
 
@@ -31,11 +32,6 @@ public class GameEngine extends JPanel implements Runnable{
     //CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
     //PhysicsAnt physicsAnt = new PhysicsAnt(this, keyHandler);
     
-
-
-
-
-
     public GameEngine(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.darkGray);
@@ -52,10 +48,6 @@ public class GameEngine extends JPanel implements Runnable{
                 entityList[i] = new RedAnt(this);
             }
         }
-        
-        
-
-
     }
 
     public void startGameThread(){
@@ -73,10 +65,6 @@ public class GameEngine extends JPanel implements Runnable{
        //Draw count is the number of frames drawn
        long timer = 0;
        int drawCount = 0;
-
-      
-      
-
 
         while(gameThread != null){
             //gets current time in nanoseconds
@@ -111,8 +99,8 @@ public class GameEngine extends JPanel implements Runnable{
         for (int i = 0; i < entityList.length; i++){
             entityList[i].updateState();
         }
-        //physicsAnt.updateState();
-        //centerPhysicsAnt.updateState();
+        //physAnt.updateState();
+        centerPhysicsAnt.updateState();
         
 
     }
@@ -124,8 +112,8 @@ public class GameEngine extends JPanel implements Runnable{
         for (int i = 0; i < entityList.length; i++){
             entityList[i].draw(g2);
         }
-        //physicsAnt.draw(g2);
-        //centerPhysicsAnt.draw(g2);
+        //physAnt.draw(g2);
+        centerPhysicsAnt.draw(g2);
           
 
     }

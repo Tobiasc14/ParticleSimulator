@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,7 +17,7 @@ public class Player extends Entity {
     public Player(GameEngine gameEngine, KeyHandler keyHandler){
         this.gameEngine = gameEngine;
         this.keyHandler = keyHandler;
-
+        
         setDefaultValues();
         getPlayerImage();
 
@@ -29,6 +30,10 @@ public class Player extends Entity {
         y = 100;
         speed = 2;
         direction = "down";
+        sizeX = 16;
+        sizeY = 16;
+        defaultSpeed = 2;
+        setBounds();
     }
 
     public void updateState(){
@@ -86,18 +91,8 @@ public class Player extends Entity {
             }
         }
         //Clamps position to within bounds of screen
-        if (x < 0){
-            x=0;
-        }
-        if (y < 0){
-            y = 0;
-        }
-        if (x>gameEngine.screenWidth-16){
-            x=gameEngine.screenWidth-16;
-        }
-        if (y>gameEngine.screenHeight-16){
-            y = gameEngine.screenHeight-16;
-        }
+        clamp();
+        hitbox.setBounds(x, y, sizeX, sizeY);
         
 
     }
@@ -208,12 +203,27 @@ public class Player extends Entity {
         }
         //g2.setColor(Color.white);
         //g2.drawRect(x, y, gameEngine.tileSize, gameEngine.tileSize);
-        g2.drawImage(image, x, y, gameEngine.tileSize/2, gameEngine.tileSize/2, null);
-        
+        g2.drawImage(image, x, y, sizeX, sizeY, null);
+        g2.setColor(Color.cyan);
+        g2.draw(hitbox);
 
 
        
 
+    }
+    public void clamp(){
+        if (x < 0){
+            x=0;
+        }
+        if (y < 0){
+            y = 0;
+        }
+        if (x>gameEngine.screenWidth-sizeX){
+            x=gameEngine.screenWidth-sizeX;
+        }
+        if (y>gameEngine.screenHeight-sizeY){
+            y = gameEngine.screenHeight-sizeY;
+        }
     }
 
 }

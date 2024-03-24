@@ -1,5 +1,7 @@
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,17 +15,13 @@ public class RedAnt extends Entity{
     //KeyHandler keyHandler;
 
 
-
     public RedAnt(GameEngine gameEngine){
         this.gameEngine=gameEngine;
         //this.keyHandler=keyHandler;
 
         setDefaultValues();
         getSpriteImage();
-        defaultSpeed = 2;
-
-
-
+        
 
     }
 
@@ -32,30 +30,13 @@ public class RedAnt extends Entity{
         y = 200;
         speed = 2;
         direction = "down";
+        sizeX = 12;
+        sizeY = 12;
+        defaultSpeed = 2;
+        setBounds();
     }
 
-    public String pickDirection(){
-        String direction = this.direction;
-        String [] directionOptions = {"up", "upRight", "right", "downRight", "down", "downLeft", "left", "upLeft"};
-        int lastDirectionIndex = Arrays.asList(directionOptions).lastIndexOf(direction);
-
-        if (Math.random()>=0.5){
-            lastDirectionIndex++;
-        }
-        else{
-            lastDirectionIndex--;
-        }
-        if (lastDirectionIndex < 0){
-            lastDirectionIndex = 7;
-        }
-        if (lastDirectionIndex >7){
-            lastDirectionIndex = 0;
-        }
-        return directionOptions[lastDirectionIndex];
-
-
-    }
-    
+      
 
     public void updateState(){
 
@@ -110,22 +91,12 @@ public class RedAnt extends Entity{
                 directionChangeCounter=0;
             }   
         
-                    //This updates the images associated with a sprite ever 12 iterations of update method
-                
-            
+           
             //Clamps position to within bounds of screen
-            if (x < 0){
-                x=0;
-            }
-            if (y < 0){
-                y = 0;
-            }
-            if (x>gameEngine.screenWidth-16){
-                x=gameEngine.screenWidth-16;
-            }
-            if (y>gameEngine.screenHeight-16){
-                y = gameEngine.screenHeight-16;
-            }
+            
+            
+            clamp();
+            hitbox.setBounds(x, y, sizeX, sizeY);
         }
         
         
@@ -230,17 +201,48 @@ public class RedAnt extends Entity{
             }
             break;         
         
-        
-            
-
         }
-        //g2.setColor(Color.white);
-        //g2.drawRect(x, y, gameEngine.tileSize, gameEngine.tileSize);
-        g2.drawImage(image, x, y, gameEngine.tileSize/2, gameEngine.tileSize/2, null);
         
+        g2.drawImage(image, x, y, sizeX, sizeY, null);
+        g2.setColor(Color.red);
+        g2.draw(hitbox);
+      
 
 
-       
+    }
+    public void clamp(){
+        if (x < 0){
+            x=0;
+        }
+        if (y < 0){
+            y = 0;
+        }
+        if (x>gameEngine.screenWidth-sizeX){
+            x=gameEngine.screenWidth-sizeX;
+        }
+        if (y>gameEngine.screenHeight-sizeY){
+            y = gameEngine.screenHeight-sizeY;
+        }
+    } 
+    public String pickDirection(){
+        String direction = this.direction;
+        String [] directionOptions = {"up", "upRight", "right", "downRight", "down", "downLeft", "left", "upLeft"};
+        int lastDirectionIndex = Arrays.asList(directionOptions).lastIndexOf(direction);
+
+        if (Math.random()>=0.5){
+            lastDirectionIndex++;
+        }
+        else{
+            lastDirectionIndex--;
+        }
+        if (lastDirectionIndex < 0){
+            lastDirectionIndex = 7;
+        }
+        if (lastDirectionIndex >7){
+            lastDirectionIndex = 0;
+        }
+        return directionOptions[lastDirectionIndex];
+
 
     }
 

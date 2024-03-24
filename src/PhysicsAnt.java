@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -14,7 +15,7 @@ public class PhysicsAnt extends Entity{
     public PhysicsAnt(GameEngine gameEngine, KeyHandler keyHandler){
         this.gameEngine=gameEngine;
         this.keyHandler=keyHandler;
-
+        
         setDefaultValues();
         getSpriteImage();
     }
@@ -26,6 +27,10 @@ public class PhysicsAnt extends Entity{
         ySpeed = 0;
         xSpeed = 0;
         speed = 2;
+        sizeX = 12;
+        sizeY = 12;
+        defaultSpeed = 2;
+        setBounds();
     }
     public void updateState(){
 
@@ -67,21 +72,8 @@ public class PhysicsAnt extends Entity{
         }
 
         //Clamps position to within bounds of screen
-        if (x < 0){
-            x=0;
-        }
-        if (y < 0){
-            y = 0;
-        }
-        if (x>gameEngine.screenWidth-16){
-            x=gameEngine.screenWidth-16;
-        }
-        if (y>gameEngine.screenHeight-16){
-            y = gameEngine.screenHeight-16;
-            System.out.println("Final ySpeed: " + ySpeed);
-            ySpeed = 0;
-           
-        }
+        clamp();
+        hitbox.setBounds(x, y, sizeX, sizeY);
 
     }
 
@@ -186,9 +178,25 @@ public class PhysicsAnt extends Entity{
             
 
         }
-        //g2.setColor(Color.white);
-        //g2.drawRect(x, y, gameEngine.tileSize, gameEngine.tileSize);
-        g2.drawImage(image, x, y, gameEngine.tileSize/2, gameEngine.tileSize/2, null);
+        
+        g2.drawImage(image, x, y, sizeX, sizeY, null);
+        g2.setColor(Color.blue);
+        g2.draw(hitbox);
+    }
+
+    public void clamp(){
+        if (x < 0){
+            x=0;
+        }
+        if (y < 0){
+            y = 0;
+        }
+        if (x>gameEngine.screenWidth-sizeX){
+            x=gameEngine.screenWidth-sizeX;
+        }
+        if (y>gameEngine.screenHeight-sizeY){
+            y = gameEngine.screenHeight-sizeY;
+        }
     }
 
 }
