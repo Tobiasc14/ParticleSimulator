@@ -27,14 +27,18 @@ public class Ant extends Entity{
 
     public void updateState(){
         takePause();        
-        checkCollisionsThenMove();
+        if(!isPaused){
+            checkCollisionsThenMove();
+            updateDirection();
+        }
+        
         clamp();
         hitbox.setBounds(x, y, sizeX, sizeY);
         
     }
     public void updateDirection(){
         directionChangeCounter++;
-        if(directionChangeCounter>14){
+        if(directionChangeCounter>spriteDirectionChangeFrequency+randomVariability(15)){
             this.direction = pickDirection();
             directionChangeCounter=0;
         }
@@ -75,7 +79,7 @@ public class Ant extends Entity{
     }
     public void updateSprite(){
         spriteCounter++;
-            if(spriteCounter>8){
+            if(spriteCounter>spriteUpdateFrequency+randomVariability(10)){
                 
                 if(spriteNumber == 1){
                     spriteNumber = 2;
@@ -87,13 +91,13 @@ public class Ant extends Entity{
             }
     }
     public void checkCollisionsThenMove(){
-        updateDirection();
+        
         gameEngine.collisionChecker.entityCheckCollision(this);
         move();
     }
     public void takePause(){
         pauseCounter++;
-        if (pauseCounter > 50){
+        if (pauseCounter > 30+randomVariability(240)){
             randomPause(0.1);
             pauseCounter = 0;
         }
@@ -205,7 +209,7 @@ public class Ant extends Entity{
 
         }
         g2.drawImage(image, x, y, sizeX, sizeY, null);
-        drawHitbox(g2);
+        //drawHitbox(g2);
         
 
     }

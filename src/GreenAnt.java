@@ -26,6 +26,8 @@ public class GreenAnt extends Ant{
         y = (int) (gameEngine.screenHeight*Math.random())-sizeY;
         defaultSpeed = 1;
         setBounds();
+        spriteDirectionChangeFrequency = 31;
+        spriteUpdateFrequency = 20;
     }
 
     public void getSpriteImage(){

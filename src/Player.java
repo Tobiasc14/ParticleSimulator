@@ -31,12 +31,14 @@ public class Player extends Ant {
         sizeY = 16;
         defaultSpeed = 2;
         setBounds();
+        spriteUpdateFrequency = 30;
     }
 
     public void updateState(){
 
         if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed){    
-            checkCollisionsThenMove();               
+            checkCollisionsThenMove();  
+            updateDirection();             
         }        
         clamp();
         hitbox.setBounds(x, y, sizeX, sizeY);        
