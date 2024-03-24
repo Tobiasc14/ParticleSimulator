@@ -197,17 +197,11 @@ public class GreenAnt extends Entity{
             }
             break;         
         
-        
-            
-
         }
         
         g2.drawImage(image, x, y, sizeX,sizeY, null);
         g2.setColor(Color.green);
         g2.draw(hitbox);
-
-
-       
 
     }
 
