@@ -19,6 +19,7 @@ public class GameEngine extends JPanel implements Runnable{
     
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
     
     //Adds entities
     Player player = new Player(this, keyHandler);

@@ -42,41 +42,49 @@ public class Player extends Entity {
             if (keyHandler.upPressed == true){
                 if(keyHandler.leftPressed == true){
                     direction = "upLeft";
-                    x -= speed;
                 }
                 else if (keyHandler.rightPressed == true){
                     direction = "upRight";
-                    x += speed;
                 }
                 else {
                     direction = "up";
                 }
-                y -= speed;
             }
             else if (keyHandler.downPressed == true){
                 if(keyHandler.leftPressed == true){
                     direction = "downLeft";
-                    x -= speed;
                 }
                 else if (keyHandler.rightPressed == true){
                     direction = "downRight";
-                    x += speed;
                 }
                 else {
                     direction = "down";
                 }
-                
-                y += speed;
             }
             else if (keyHandler.rightPressed == true){
                 direction = "right";
-                x += speed;
             }
             else if (keyHandler.leftPressed == true){
                 direction = "left";
-                x -= speed;
                 
             }
+
+            gameEngine.collisionChecker.checkCollision(this);
+            //The collision checker updates the hitting something variable
+            if (!hittingSomething){
+                switch(direction){
+                    case "up": y-= speed; break;
+                    case "down": y+= speed; break;
+                    case "right": x+= speed; break;
+                    case "left": x-= speed; break;
+                    case "upLeft": x-=speed; y -= speed; break;
+                    case "downLeft": x-=speed; y += speed; break;
+                    case "upRight": x+=speed; y -= speed; break;
+                    case "downRight": x+=speed; y += speed; break;
+                }
+            }
+            
+
     
                 //This updates the images associated with a sprite ever 10 iterations of update method
             spriteCounter++;

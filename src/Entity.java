@@ -11,6 +11,7 @@ public class Entity {
     
     public Rectangle hitbox = new Rectangle(x, y, sizeX, sizeY);
     public boolean collision = true;
+    public boolean hittingSomething = false;
     public int directionChangeCounter = 0;
     public int physicsCounter = 0;
     public int pauseCounter = 0;
