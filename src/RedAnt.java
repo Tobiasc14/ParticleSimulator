@@ -24,13 +24,13 @@ public class RedAnt extends Entity{
 
     }
 
-    public void setDefaultValues(){
-        x = 500;
-        y = 200;
+    public void setDefaultValues(){        
         speed = 2;
         direction = "down";
         sizeX = 12;
         sizeY = 12;
+        x = (int) (gameEngine.screenWidth*Math.random())-sizeX;
+        y = (int) (gameEngine.screenHeight*Math.random())-sizeY;
         defaultSpeed = 2;
         setBounds();
     }
@@ -44,7 +44,8 @@ public class RedAnt extends Entity{
             randomPause(0.1);
             pauseCounter = 0;
         }
-        if (speed != 0){
+        gameEngine.collisionChecker.entityCheckCollision(this);
+        if (speed != 0 & !hittingSomething){
             if (this.direction.equals("upLeft")){
                 x -= speed;
                 y -= speed;
@@ -84,20 +85,15 @@ public class RedAnt extends Entity{
                 }
             spriteCounter = 0;
             }
-            directionChangeCounter++;
+        }
+        directionChangeCounter++;
             if(directionChangeCounter>14){
                 this.direction = pickDirection();
                 directionChangeCounter=0;
-            }   
-        
-           
-            //Clamps position to within bounds of screen
-            
-            
-            clamp();
-            hitbox.setBounds(x, y, sizeX, sizeY);
-        }
-        
+            }
+        //Clamps position to within bounds of screen
+        clamp();
+        hitbox.setBounds(x, y, sizeX, sizeY);
         
 
     }

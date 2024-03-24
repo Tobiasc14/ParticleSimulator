@@ -21,13 +21,13 @@ public class GreenAnt extends Entity{
         setDefaultValues();
         getSpriteImage();
     }
-    public void setDefaultValues(){
-        x = 500;
-        y = 200;
+    public void setDefaultValues(){        
         speed = 1;
         direction = "down";
         sizeX = 16;
         sizeY = 16;
+        x = (int) (gameEngine.screenWidth*Math.random())-sizeX;
+        y = (int) (gameEngine.screenHeight*Math.random())-sizeY;
         defaultSpeed = 1;
         setBounds();
     }
@@ -41,7 +41,8 @@ public class GreenAnt extends Entity{
             randomPause(0.1);
             pauseCounter = 0;
         }
-        if (speed != 0){
+        gameEngine.collisionChecker.entityCheckCollision(this);
+        if (speed != 0 & !hittingSomething){
             if (this.direction.equals("upLeft")){
                 x -= speed;
                 y -= speed;
@@ -80,21 +81,17 @@ public class GreenAnt extends Entity{
                     spriteNumber = 1;
                 }
             spriteCounter = 0;
-            }
-            directionChangeCounter++;
+            }               
+           
+        }
+        directionChangeCounter++;
             if(directionChangeCounter>30){
                 this.direction = pickDirection();
                 directionChangeCounter=0;
-            }   
-        
-                    //This updates the images associated with a sprite ever 12 iterations of update method
-                
-            
-            //Clamps position to within bounds of screen
-            clamp();
-            hitbox.setBounds(x, y, sizeX, sizeY);
-        }
-        
+            }
+         //Clamps position to within bounds of screen
+         clamp();
+         hitbox.setBounds(x, y, sizeX, sizeY);
         
 
     }

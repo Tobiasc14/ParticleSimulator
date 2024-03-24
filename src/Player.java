@@ -69,7 +69,7 @@ public class Player extends Entity {
                 
             }
 
-            gameEngine.collisionChecker.checkCollision(this);
+            gameEngine.collisionChecker.playerCheckCollision(this);
             //The collision checker updates the hitting something variable
             if (!hittingSomething){
                 switch(direction){

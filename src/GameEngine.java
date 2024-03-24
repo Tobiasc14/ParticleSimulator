@@ -43,11 +43,12 @@ public class GameEngine extends JPanel implements Runnable{
 
         for (int i =0; i < entityList.length; i++){
             if (i<30){
-                entityList[i] = new GreenAnt(this);
+                entityList[i] = new GreenAnt(this);                
             }
             if (i > 28){
                 entityList[i] = new RedAnt(this);
             }
+            
         }
     }
 
