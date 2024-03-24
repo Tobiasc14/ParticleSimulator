@@ -7,21 +7,18 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Player extends Entity {
+public class Player extends Ant {
 
-    GameEngine gameEngine;
+   
     KeyHandler keyHandler;
 
-    
 
     public Player(GameEngine gameEngine, KeyHandler keyHandler){
-        this.gameEngine = gameEngine;
+       super(gameEngine);
         this.keyHandler = keyHandler;
         
         setDefaultValues();
         getPlayerImage();
-
-
 
     }
 
@@ -38,71 +35,47 @@ public class Player extends Entity {
 
     public void updateState(){
 
-        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed){
-            if (keyHandler.upPressed == true){
-                if(keyHandler.leftPressed == true){
-                    direction = "upLeft";
-                }
-                else if (keyHandler.rightPressed == true){
-                    direction = "upRight";
-                }
-                else {
-                    direction = "up";
-                }
-            }
-            else if (keyHandler.downPressed == true){
-                if(keyHandler.leftPressed == true){
-                    direction = "downLeft";
-                }
-                else if (keyHandler.rightPressed == true){
-                    direction = "downRight";
-                }
-                else {
-                    direction = "down";
-                }
+        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed){    
+            checkCollisionsThenMove();               
+        }        
+        clamp();
+        hitbox.setBounds(x, y, sizeX, sizeY);        
+
+    }
+    public void checkCollisionsThenMove(){
+        gameEngine.collisionChecker.playerCheckCollision(this);
+        move();
+    }
+    public void updateDirection(){
+        if (keyHandler.upPressed == true){
+            if(keyHandler.leftPressed == true){
+                direction = "upLeft";
             }
             else if (keyHandler.rightPressed == true){
-                direction = "right";
+                direction = "upRight";
             }
-            else if (keyHandler.leftPressed == true){
-                direction = "left";
-                
-            }
-
-            gameEngine.collisionChecker.playerCheckCollision(this);
-            //The collision checker updates the hitting something variable
-            if (!hittingSomething){
-                switch(direction){
-                    case "up": y-= speed; break;
-                    case "down": y+= speed; break;
-                    case "right": x+= speed; break;
-                    case "left": x-= speed; break;
-                    case "upLeft": x-=speed; y -= speed; break;
-                    case "downLeft": x-=speed; y += speed; break;
-                    case "upRight": x+=speed; y -= speed; break;
-                    case "downRight": x+=speed; y += speed; break;
-                }
-            }
-            
-
-    
-                //This updates the images associated with a sprite ever 10 iterations of update method
-            spriteCounter++;
-            if(spriteCounter>15){
-                if(spriteNumber == 1){
-                    spriteNumber = 2;
-                }
-                else if(spriteNumber == 2){
-                    spriteNumber = 1;
-                }
-                spriteCounter = 0;
+            else {
+                direction = "up";
             }
         }
-        //Clamps position to within bounds of screen
-        clamp();
-        hitbox.setBounds(x, y, sizeX, sizeY);
-        
-
+        else if (keyHandler.downPressed == true){
+            if(keyHandler.leftPressed == true){
+                direction = "downLeft";
+            }
+            else if (keyHandler.rightPressed == true){
+                direction = "downRight";
+            }
+            else {
+                direction = "down";
+            }
+        }
+        else if (keyHandler.rightPressed == true){
+            direction = "right";
+        }
+        else if (keyHandler.leftPressed == true){
+            direction = "left";
+            
+        }
     }
 
     public void getPlayerImage(){
@@ -125,113 +98,15 @@ public class Player extends Entity {
             downRight1 = (BufferedImage) ImageIO.read(new File("images/PlayerBlueAnt/AntDownRight.png"));
             downRight2 = (BufferedImage) ImageIO.read(new File("images/PlayerBlueAnt/AntDownRight2.png"));
 
-        } catch (IOException e) {
-            
+        } catch (IOException e) {            
             e.printStackTrace();
             
-            
         }
 
-    }
-
-
-    public void draw(Graphics2D g2){
-        BufferedImage image = null;
-        
-        switch(direction){
-        case "up":
-            if(spriteNumber == 1){
-                image = up1;
-            }
-            if(spriteNumber == 2){
-                image = up2;
-            }
-            break;            
-        case "down":
-            if(spriteNumber == 1){
-                image = down1;
-            }
-            if(spriteNumber == 2){
-                image = down2;
-            }
-            break;
-        case "left":
-            if(spriteNumber == 1){
-                image = left1;
-            }
-            if(spriteNumber == 2){
-                image = left2;
-            }
-            break;
-        case "right":
-            if(spriteNumber == 1){
-                image = right1;
-            }
-            if(spriteNumber == 2){
-                image = right2;
-            }
-            break;
-        case "upLeft":
-            if(spriteNumber == 1){
-                image = upLeft1;
-            }
-            if(spriteNumber == 2){
-                image = upLeft2;
-            }
-            
-            break;            
-        case "upRight":
-            if(spriteNumber == 1){
-                image = upRight1;
-            }
-            if(spriteNumber == 2){
-                image = upRight2;
-            }
-            break;            
-        case "downLeft":
-            if(spriteNumber == 1){
-                image = downLeft1;
-            }
-            if(spriteNumber == 2){
-                image = downLeft2;
-            }
-            break;     
-        case "downRight":
-            if(spriteNumber == 1){
-                image = downRight1;
-            }
-            if(spriteNumber == 2){
-                image = downRight2;
-            }
-            break;         
-        
-        
-            
-
-        }
-        //g2.setColor(Color.white);
-        //g2.drawRect(x, y, gameEngine.tileSize, gameEngine.tileSize);
-        g2.drawImage(image, x, y, sizeX, sizeY, null);
+    }  
+    public void drawHitbox(Graphics2D g2){
         g2.setColor(Color.cyan);
         g2.draw(hitbox);
-
-
-       
-
-    }
-    public void clamp(){
-        if (x < 0){
-            x=0;
-        }
-        if (y < 0){
-            y = 0;
-        }
-        if (x>gameEngine.screenWidth-sizeX){
-            x=gameEngine.screenWidth-sizeX;
-        }
-        if (y>gameEngine.screenHeight-sizeY){
-            y = gameEngine.screenHeight-sizeY;
-        }
-    }
-
+    } 
+    
 }
