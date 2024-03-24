@@ -57,15 +57,21 @@ public class CollisionChecker {
             case "downRight": entity.x+=entity.speed; entity.y += entity.speed; break;
         }
         entity.setBounds();
-        for(int i = 0; i < gameEngine.entityList.length; i++){
-            if (entity.equals(gameEngine.entityList[i])){
-
+        if (entity.hitbox.intersects(gameEngine.player.hitbox)){
+            entity.hittingSomething = true;
+        }
+        else{
+            for(int i = 0; i < gameEngine.entityList.length; i++){
+                if (entity.equals(gameEngine.entityList[i])){
+    
+                }
+                else if(entity.hitbox.intersects(gameEngine.entityList[i].hitbox)){
+                    entity.hittingSomething = true;
+                    
+                                   
+                } 
             }
-            else if(entity.hitbox.intersects(gameEngine.entityList[i].hitbox)){
-                entity.hittingSomething = true;
-                
-                               
-            }           
+                      
         }
         switch(entity.direction){
             case "up": entity.y+= entity.speed; break;
