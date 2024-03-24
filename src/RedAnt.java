@@ -21,7 +21,7 @@ public class RedAnt extends Entity{
         setDefaultValues();
         getSpriteImage();
         defaultSpeed = 2;
-        
+
 
 
 
@@ -153,8 +153,7 @@ public class RedAnt extends Entity{
             downRight2 = (BufferedImage) ImageIO.read(new File("images/RedAnt/AntDownRight2.png"));
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            
+          
             e.printStackTrace();
             
             

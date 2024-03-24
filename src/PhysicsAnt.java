@@ -106,9 +106,7 @@ public class PhysicsAnt extends Entity{
             downRight2 = (BufferedImage) ImageIO.read(new File("images/PlayerBlueAnt/AntDownRight2.png"));
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            
-            e.printStackTrace();
+           e.printStackTrace();
             
             
         }
