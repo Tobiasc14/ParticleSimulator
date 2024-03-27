@@ -33,6 +33,7 @@ public class PhysicsAnt extends Ant{
         sizeY = 12;
         defaultSpeed = 2;
         spriteUpdateFrequency = 30;
+        name = "physicsAnt";
         setBounds();
     }
     public void updateState(){
@@ -42,7 +43,7 @@ public class PhysicsAnt extends Ant{
         hitbox.setBounds(x, y, sizeX, sizeY);
     }
     public void checkCollisionsThenMove(){
-        gameEngine.collisionChecker.playerCheckCollision(this);
+        gameEngine.collisionChecker.checkCollisionAllEntities(this);
         move();
     }
     

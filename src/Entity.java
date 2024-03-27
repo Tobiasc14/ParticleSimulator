@@ -7,7 +7,7 @@ public class Entity {
     public int x, y, speed, ySpeed, xSpeed, defaultSpeed, sizeX, sizeY ;
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public BufferedImage upLeft1, upLeft2, downRight1, downRight2, downLeft1, downLeft2, upRight1, upRight2;
-    public String direction;
+    public String direction, name;
     public int entityListLoc;
     
     public Rectangle hitbox = new Rectangle(x, y, sizeX, sizeY);

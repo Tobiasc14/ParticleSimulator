@@ -15,6 +15,7 @@ public class CenterSeekingPhysicsAnt extends PhysicsAnt{
         direction = "left";        
         sizeX = 25;
         sizeY = 25;
+        name = "centerSeekingAnt";
         setBounds();
         
     }

@@ -22,7 +22,7 @@ public class GameEngine extends JPanel implements Runnable{
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     
     //Adds entities
-    Player player = new Player(this, keyHandler);
+    //Player player = new Player(this, keyHandler);
     public Entity [] entityList = new Entity[40];
     PhysicsAnt physAnt = new PhysicsAnt(this, keyHandler);
     CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
@@ -40,12 +40,13 @@ public class GameEngine extends JPanel implements Runnable{
         //The KeyHandler class defines a key listener, we then add that to the game engine
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
-
-        for (int i =0; i < entityList.length; i++){
-            if (i<30){
+        
+        entityList[0] = new Player(this, keyHandler);
+        for (int i =1; i < entityList.length; i++){
+            if (i<26){
                 entityList[i] = new GreenAnt(this);                
             }
-            if (i > 28){
+            else{
                 entityList[i] = new RedAnt(this);
             }
             
@@ -97,7 +98,7 @@ public class GameEngine extends JPanel implements Runnable{
     }
 
     public void updateState(){
-        player.updateState();
+        //player.updateState();
         for (int i = 0; i < entityList.length; i++){
             entityList[i].updateState();
         }
@@ -110,7 +111,7 @@ public class GameEngine extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        player.draw(g2);
+        //player.draw(g2);
         for (int i = 0; i < entityList.length; i++){
             entityList[i].draw(g2);
         }

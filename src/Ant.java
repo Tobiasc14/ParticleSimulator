@@ -23,6 +23,7 @@ public class Ant extends Entity{
         y = 100;
         defaultSpeed = 2;
         setBounds();
+        name = "ant";
     }
 
     public void updateState(){
@@ -92,7 +93,7 @@ public class Ant extends Entity{
     }
     public void checkCollisionsThenMove(){
         
-        gameEngine.collisionChecker.entityCheckCollision(this);
+        gameEngine.collisionChecker.checkCollisionAllEntities(this);
         move();
     }
     public void takePause(){

@@ -32,6 +32,7 @@ public class Player extends Ant {
         defaultSpeed = 2;
         setBounds();
         spriteUpdateFrequency = 30;
+        name = "player";
     }
 
     public void updateState(){
@@ -44,10 +45,7 @@ public class Player extends Ant {
         hitbox.setBounds(x, y, sizeX, sizeY);        
 
     }
-    public void checkCollisionsThenMove(){
-        gameEngine.collisionChecker.playerCheckCollision(this);
-        move();
-    }
+    
     public void updateDirection(){
         if (keyHandler.upPressed == true){
             if(keyHandler.leftPressed == true){
