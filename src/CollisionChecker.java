@@ -8,16 +8,22 @@ public class CollisionChecker {
         this.gameEngine = gameEngine;
     }
     public void checkCollisionAllEntities(Entity entity){
-        entity.hittingSomething = false;
-        move(entity);
-        for(int i = 0; i < gameEngine.entityList.length; i++){
-            if (entity.equals(gameEngine.entityList[i])){    
+        if (entity != null){
+            entity.hittingSomething = false;
+            move(entity);
+            for(int i = 0; i < gameEngine.entityList.length; i++){
+                if(gameEngine.entityList[i] != null){
+                    if (entity.equals(gameEngine.entityList[i])){    
+                    }
+                    else if(entity.hitbox.intersects(gameEngine.entityList[i].hitbox)){
+                        entity.hittingSomething = true;                
+                    }
+                }
+                
             }
-            else if(entity.hitbox.intersects(gameEngine.entityList[i].hitbox)){
-                entity.hittingSomething = true;                
-            }
+            undoMove(entity);
         }
-        undoMove(entity);
+        
     }
 
     

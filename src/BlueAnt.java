@@ -1,81 +1,32 @@
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
+public class BlueAnt extends Ant{
 
-public class PhysicsAnt extends Ant{    
-    
-   
-    KeyHandler keyHandler;
-    
-    
-    public PhysicsAnt(GameEngine gameEngine, KeyHandler keyHandler){
+
+    public BlueAnt(GameEngine gameEngine){
         super(gameEngine);
-        this.keyHandler=keyHandler;
-        
+
         setDefaultValues();
         getSpriteImage();
+
     }
 
-    public void setDefaultValues(){
-        x= 500;
-        y = 10;
-        direction = "left";
-        ySpeed = 0;
-        xSpeed = 0;
+    public void setDefaultValues(){        
         speed = 2;
+        direction = "down";
         sizeX = 12;
         sizeY = 12;
+        x = (int) (gameEngine.screenWidth*Math.random())-sizeX;
+        y = (int) (gameEngine.screenHeight*Math.random())-sizeY;
         defaultSpeed = 2;
-        spriteUpdateFrequency = 30;
-        name = "physicsAnt";
+        spriteDirectionChangeFrequency = 15;
+        name = "redant";
         setBounds();
-    }
-    public void updateState(){
-        checkCollisionsThenMove();
-        //updateDirection();
-        clamp();
-        hitbox.setBounds(x, y, sizeX, sizeY);
-    }
-    public void checkCollisionsThenMove(){
-        gameEngine.collisionChecker.checkCollisionAllEntities(this);
-        move();
-    }
-    
-    public void move(){
-        if(speed !=0 & !hittingSomething){
-            if (keyHandler.rightPressed == true){
-                direction = "right";
-                x += speed;
-            }
-            else if (keyHandler.leftPressed == true){
-                direction = "left";
-                x -= speed;
-                
-            }
-           if ((keyHandler.upPressed == true | keyHandler.spacePressed == true) & y>=gameEngine.screenHeight-18){
-                direction = "up";
-                ySpeed = -12;
-            }
-            //This bit does the gravity physics
-            physicsCounter++;
-            if(physicsCounter > 1){
-                if (y<(gameEngine.screenHeight-16)){  
-                    ySpeed=ySpeed+1;          
-                    
-                } 
-                
-                physicsCounter = 0;
-            }
-            y = y+ySpeed;
-        }
-        
-        
     }
 
     public void getSpriteImage(){
@@ -99,19 +50,16 @@ public class PhysicsAnt extends Ant{
             downRight2 = (BufferedImage) ImageIO.read(new File("images/PlayerBlueAnt/AntDownRight2.png"));
 
         } catch (IOException e) {
-           e.printStackTrace();
+          
+            e.printStackTrace();
             
             
         }
     }
 
-    public void drawHitbox(Graphics2D g2){
-        g2.setColor(Color.blue);
+    public void drawHitbox(Graphics2D g2){       
+        g2.setColor(Color.red);
         g2.draw(hitbox);
     }
-        
-    }
 
-    
-    
-
+}

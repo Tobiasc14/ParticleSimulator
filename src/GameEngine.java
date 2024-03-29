@@ -15,6 +15,7 @@ public class GameEngine extends JPanel implements Runnable{
     public final int maxScreenRow = 60;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
+    public int numRedAnts, numBlueAnts, numGreenAnts, numPhysicsAnts, numPlayerAnts, numCenterSeekingPhysAnts, totalAnts;
     
     
     KeyHandler keyHandler = new KeyHandler();
@@ -23,7 +24,7 @@ public class GameEngine extends JPanel implements Runnable{
     
     //Adds entities
     //Player player = new Player(this, keyHandler);
-    public Entity [] entityList = new Entity[40];
+    public Entity [] entityList;
     PhysicsAnt physAnt = new PhysicsAnt(this, keyHandler);
     CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
     int FPS = 60;  
@@ -40,16 +41,28 @@ public class GameEngine extends JPanel implements Runnable{
         //The KeyHandler class defines a key listener, we then add that to the game engine
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
-        
-        entityList[0] = new Player(this, keyHandler);
-        for (int i =1; i < entityList.length; i++){
-            if (i<26){
-                entityList[i] = new GreenAnt(this);                
-            }
-            else{
+        setNumAnts();
+        entityList = new Entity[totalAnts];
+        //entityList[0] = new Player(this, keyHandler);
+        for (int i =0; i < entityList.length; i++){
+            if (i < totalAnts-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
                 entityList[i] = new RedAnt(this);
             }
-            
+            else if(i>=totalAnts-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<totalAnts-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
+                entityList[i] = new BlueAnt(this);
+            }
+            else if(i>=totalAnts-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<totalAnts-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
+                entityList[i] = new GreenAnt(this);
+            }
+            else if(i>=totalAnts-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<totalAnts-(numCenterSeekingPhysAnts+numPlayerAnts)){
+                entityList[i] = new PhysicsAnt(this, keyHandler);
+            }
+            else if(i>=totalAnts-(numCenterSeekingPhysAnts+numPlayerAnts) & i<totalAnts-(numPlayerAnts)){
+                entityList[i] = new CenterSeekingPhysicsAnt(this, keyHandler);
+            }
+            else if(i>=totalAnts-(numPlayerAnts)){
+                entityList[i] = new Player(this, keyHandler);
+            }
         }
     }
 
@@ -57,6 +70,15 @@ public class GameEngine extends JPanel implements Runnable{
         gameThread = new Thread(this);
         gameThread.start();
 
+    }
+    public void setNumAnts(){
+        numRedAnts = 15;
+        numBlueAnts = 15;
+        numGreenAnts = 15;
+        numPhysicsAnts = 0;
+        numCenterSeekingPhysAnts = 0;
+        numPlayerAnts = 1;
+        totalAnts = numRedAnts+numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts;
     }
     @Override
     public void run() {
@@ -100,7 +122,10 @@ public class GameEngine extends JPanel implements Runnable{
     public void updateState(){
         //player.updateState();
         for (int i = 0; i < entityList.length; i++){
-            entityList[i].updateState();
+            if (entityList[i] != null){
+                entityList[i].updateState();
+            }
+            
         }
         //physAnt.updateState();
         //centerPhysicsAnt.updateState();
@@ -113,7 +138,10 @@ public class GameEngine extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
         //player.draw(g2);
         for (int i = 0; i < entityList.length; i++){
-            entityList[i].draw(g2);
+            if (entityList[i] != null){
+                entityList[i].draw(g2);
+            }
+            
         }
         //physAnt.draw(g2);
         //centerPhysicsAnt.draw(g2);
