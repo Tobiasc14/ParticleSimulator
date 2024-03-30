@@ -73,7 +73,7 @@ public class GameEngine extends JPanel implements Runnable{
 
     }
     public void setNumAnts(){
-        numRedAnts = 120;
+        numRedAnts = 20;
         numBlueAnts =0;
         numGreenAnts = 0;
         numPhysicsAnts = 0;

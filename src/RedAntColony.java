@@ -16,7 +16,7 @@ public class RedAntColony extends AntColony{
     
 
     public void setDefaultValues(){
-        foodRemaining = 1000;
+        foodRemaining = 200;
         sizeX = 16;
         sizeY = 16;
         speed = 0;

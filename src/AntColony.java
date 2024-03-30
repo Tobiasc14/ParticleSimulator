@@ -36,7 +36,7 @@ public class AntColony extends Entity{
             if (foodRemaining>numAnts){ 
             }
             else{
-                while (foodRemaining < foodCost & antList.size()>0){                    
+                if (foodRemaining < foodCost & antList.size()>0){                    
                     removeAnt(antList.get(0));
                     foodCost = antList.size();                    
                 }
