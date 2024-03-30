@@ -25,8 +25,7 @@ public class GameEngine extends JPanel implements Runnable{
     //Adds entities
     //Player player = new Player(this, keyHandler);
     public Entity [] entityList;
-    PhysicsAnt physAnt = new PhysicsAnt(this, keyHandler);
-    CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
+    RedAntColony redColony;
     int FPS = 60;  
     
 
@@ -42,25 +41,27 @@ public class GameEngine extends JPanel implements Runnable{
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
         setNumAnts();
-        entityList = new Entity[totalAnts];
-        //entityList[0] = new Player(this, keyHandler);
-        for (int i =0; i < entityList.length; i++){
-            if (i < totalAnts-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
+        entityList = new Entity[totalAnts+1];
+        redColony = new RedAntColony(this, numRedAnts);
+        entityList[0] = redColony;
+        for (int i =1; i < entityList.length; i++){
+            if (i < entityList.length-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
                 entityList[i] = new RedAnt(this);
+                redColony.addAnt((Ant) entityList[i]);
             }
-            else if(i>=totalAnts-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<totalAnts-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
+            else if(i>=entityList.length-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
                 entityList[i] = new BlueAnt(this);
             }
-            else if(i>=totalAnts-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<totalAnts-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
+            else if(i>=entityList.length-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
                 entityList[i] = new GreenAnt(this);
             }
-            else if(i>=totalAnts-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<totalAnts-(numCenterSeekingPhysAnts+numPlayerAnts)){
+            else if(i>=entityList.length-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numCenterSeekingPhysAnts+numPlayerAnts)){
                 entityList[i] = new PhysicsAnt(this, keyHandler);
             }
-            else if(i>=totalAnts-(numCenterSeekingPhysAnts+numPlayerAnts) & i<totalAnts-(numPlayerAnts)){
+            else if(i>=entityList.length-(numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numPlayerAnts)){
                 entityList[i] = new CenterSeekingPhysicsAnt(this, keyHandler);
             }
-            else if(i>=totalAnts-(numPlayerAnts)){
+            else if(i>=entityList.length-(numPlayerAnts)){
                 entityList[i] = new Player(this, keyHandler);
             }
         }
@@ -72,9 +73,9 @@ public class GameEngine extends JPanel implements Runnable{
 
     }
     public void setNumAnts(){
-        numRedAnts = 15;
-        numBlueAnts = 15;
-        numGreenAnts = 15;
+        numRedAnts = 120;
+        numBlueAnts =0;
+        numGreenAnts = 0;
         numPhysicsAnts = 0;
         numCenterSeekingPhysAnts = 0;
         numPlayerAnts = 1;
@@ -143,10 +144,20 @@ public class GameEngine extends JPanel implements Runnable{
             }
             
         }
+    }
         //physAnt.draw(g2);
         //centerPhysicsAnt.draw(g2);
           
 
+    public void removeEntity(Entity entity){
+        if (entity != null){
+            for(int i = 0; i< entityList.length; i++){                
+                if(entity.equals(entityList[i])){                    
+                    entityList[i] = null;
+                    i = entityList.length-1;
+                }
+            }
+        }
     }
 
 

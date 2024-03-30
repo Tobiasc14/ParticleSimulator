@@ -16,7 +16,8 @@ public class CollisionChecker {
                     if (entity.equals(gameEngine.entityList[i])){    
                     }
                     else if(entity.hitbox.intersects(gameEngine.entityList[i].hitbox)){
-                        entity.hittingSomething = true;                
+                        entity.hittingSomething = true;     
+                        System.out.println("Collision Detected! " + gameEngine.entityList[i].name + " is hitting " + entity.name);           
                     }
                 }
                 
