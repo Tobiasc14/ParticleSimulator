@@ -1,20 +1,18 @@
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-public class RedAntColony extends AntColony{
-
-    public RedAntColony(GameEngine gameEngine, int numAnts) {
+public class GreenAntColony extends AntColony{
+    
+    
+    public GreenAntColony(GameEngine gameEngine, int numAnts){
         super(gameEngine, numAnts);
         getSpriteImage();
         setDefaultValues();
-        
-    
     }
-    
+
 
     public void setDefaultValues(){
         name = "antColony";
@@ -29,7 +27,7 @@ public class RedAntColony extends AntColony{
 
     public void getSpriteImage(){
         try {
-            image = (BufferedImage) ImageIO.read(new File("images/AntColony/RedAntColony.png"));
+            image = (BufferedImage) ImageIO.read(new File("images/AntColony/GreenAntColony.png"));
         } catch (IOException e) {            
             e.printStackTrace();
         };

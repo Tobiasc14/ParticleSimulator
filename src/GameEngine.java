@@ -26,6 +26,8 @@ public class GameEngine extends JPanel implements Runnable{
     //Player player = new Player(this, keyHandler);
     public Entity [] entityList;
     RedAntColony redColony;
+    BlueAntColony blueColony;
+    GreenAntColony greenColony;
     int FPS = 60;  
     
 
@@ -41,19 +43,26 @@ public class GameEngine extends JPanel implements Runnable{
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
         setNumAnts();
-        entityList = new Entity[totalAnts+1];
+        entityList = new Entity[totalAnts+3];
         redColony = new RedAntColony(this, numRedAnts);
+        blueColony = new BlueAntColony(this, numBlueAnts);
+        greenColony = new GreenAntColony(this, numGreenAnts);
         entityList[0] = redColony;
-        for (int i =1; i < entityList.length; i++){
+        entityList[1] = blueColony;
+        entityList[2] = greenColony;
+
+        for (int i =3; i < entityList.length; i++){
             if (i < entityList.length-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
                 entityList[i] = new RedAnt(this);
                 redColony.addAnt((Ant) entityList[i]);
             }
             else if(i>=entityList.length-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
                 entityList[i] = new BlueAnt(this);
+                blueColony.addAnt((Ant) entityList[i]);
             }
             else if(i>=entityList.length-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
                 entityList[i] = new GreenAnt(this);
+                greenColony.addAnt((Ant) entityList[i]);
             }
             else if(i>=entityList.length-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numCenterSeekingPhysAnts+numPlayerAnts)){
                 entityList[i] = new PhysicsAnt(this, keyHandler);
@@ -73,8 +82,8 @@ public class GameEngine extends JPanel implements Runnable{
 
     }
     public void setNumAnts(){
-        numRedAnts = 20;
-        numBlueAnts =0;
+        numRedAnts = 0;
+        numBlueAnts =5;
         numGreenAnts = 0;
         numPhysicsAnts = 0;
         numCenterSeekingPhysAnts = 0;
