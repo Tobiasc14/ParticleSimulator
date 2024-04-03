@@ -15,8 +15,7 @@ public class AntColony extends Entity{
         this.gameEngine = gameEngine;
         this.numAnts = numAnts;
         setDefaultValues();
-       
-        
+        clamp();        
 
     }
     
@@ -24,8 +23,8 @@ public class AntColony extends Entity{
         foodRemaining = 200;
         direction = "down";
         speed = 0;        
-        sizeX = 16;
-        sizeY = 16;   
+        sizeX = 14;
+        sizeY = 14;   
         name = "antColony";
     }
     public void updateState(){
@@ -33,6 +32,9 @@ public class AntColony extends Entity{
         if (foodCheckCounter >60){
             foodCost = antList.size();
             foodRemaining = foodRemaining-foodCost;
+            if(foodRemaining <0){
+                foodRemaining = 0;
+            }            
             if (foodRemaining>numAnts){ 
             }
             else{
@@ -43,7 +45,9 @@ public class AntColony extends Entity{
                 numAnts = antList.size();                
             }
             foodCheckCounter = 0;
+            System.out.println("Food Remaining in Colony: " + foodRemaining);
         }
+
         
 
     }
@@ -60,6 +64,20 @@ public class AntColony extends Entity{
             antList.remove(ant);
             
             gameEngine.removeEntity(ant);
+        }
+    }
+    public void clamp(){
+        if (x < 0){
+            x=0;
+        }
+        if (y < 0){
+            y = 0;
+        }
+        if (x>gameEngine.screenWidth-sizeX){
+            x=gameEngine.screenWidth-sizeX;
+        }
+        if (y>gameEngine.screenHeight-sizeY){
+            y = gameEngine.screenHeight-sizeY;
         }
     }
 

@@ -10,7 +10,7 @@ public class RedAntColony extends AntColony{
     public RedAntColony(GameEngine gameEngine, int numAnts) {
         super(gameEngine, numAnts);
         getSpriteImage();
-        setDefaultValues();
+        //setDefaultValues();
         
     
     }
@@ -19,8 +19,8 @@ public class RedAntColony extends AntColony{
     public void setDefaultValues(){
         name = "antColony";
         foodRemaining = 200;
-        sizeX = 16;
-        sizeY = 16;
+        sizeX = 24;
+        sizeY = 24;
         speed = 0;
         x = (int) (gameEngine.screenWidth*Math.random())-sizeX;
         y = (int) (gameEngine.screenHeight*Math.random())-sizeY;

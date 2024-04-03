@@ -93,7 +93,7 @@ public class Ant extends Entity{
     }
     public void checkCollisionsThenMove(){
         
-        gameEngine.collisionChecker.checkCollisionAllEntities(this);
+        gameEngine.collisionChecker.checkAllCollisions(this);
         move();
     }
     public void takePause(){

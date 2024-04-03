@@ -47,6 +47,7 @@ public class Entity {
     public void setBounds(){
         hitbox.setBounds(x, y, sizeX, sizeY);
     }
+    
 
     
 

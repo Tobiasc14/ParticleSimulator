@@ -25,7 +25,7 @@ public class RedAnt extends Ant{
         y = (int) (gameEngine.screenHeight*Math.random())-sizeY;
         defaultSpeed = 2;
         spriteDirectionChangeFrequency = 15;
-        name = "redant";
+        name = "redAnt";
         setBounds();
     }
 

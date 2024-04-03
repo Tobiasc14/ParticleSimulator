@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -25,6 +26,7 @@ public class GameEngine extends JPanel implements Runnable{
     //Adds entities
     //Player player = new Player(this, keyHandler);
     public Entity [] entityList;
+    public ArrayList<Food> foodList;
     RedAntColony redColony;
     BlueAntColony blueColony;
     GreenAntColony greenColony;
@@ -43,6 +45,7 @@ public class GameEngine extends JPanel implements Runnable{
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
         setNumAnts();
+        foodList = new ArrayList<Food>();
         entityList = new Entity[totalAnts+3];
         redColony = new RedAntColony(this, numRedAnts);
         blueColony = new BlueAntColony(this, numBlueAnts);
@@ -74,6 +77,9 @@ public class GameEngine extends JPanel implements Runnable{
                 entityList[i] = new Player(this, keyHandler);
             }
         }
+        for (int i = 0; i < 1000; i++){
+            foodList.add(new Food(this, 10));
+        }
     }
 
     public void startGameThread(){
@@ -82,9 +88,9 @@ public class GameEngine extends JPanel implements Runnable{
 
     }
     public void setNumAnts(){
-        numRedAnts = 15;
-        numBlueAnts =25;
-        numGreenAnts = 30;
+        numRedAnts = 20;
+        numBlueAnts =20;
+        numGreenAnts = 20;
         numPhysicsAnts = 0;
         numCenterSeekingPhysAnts = 0;
         numPlayerAnts = 1;
@@ -147,12 +153,18 @@ public class GameEngine extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         //player.draw(g2);
+        for (int i = 0; i < foodList.size(); i++){
+            if(foodList.get(i) != null){
+                foodList.get(i).draw(g2);
+            }
+        }
         for (int i = 0; i < entityList.length; i++){
             if (entityList[i] != null){
                 entityList[i].draw(g2);
             }
             
         }
+        
     }
         //physAnt.draw(g2);
         //centerPhysicsAnt.draw(g2);
