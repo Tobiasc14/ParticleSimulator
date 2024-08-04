@@ -15,7 +15,8 @@ public class AntColony extends Entity{
         this.gameEngine = gameEngine;
         this.numAnts = numAnts;
         setDefaultValues();
-        clamp();        
+        clamp();
+             
 
     }
     
@@ -45,13 +46,10 @@ public class AntColony extends Entity{
                 numAnts = antList.size();                
             }
             foodCheckCounter = 0;
-            System.out.println("Food Remaining in Colony: " + foodRemaining);
-        }
+            System.out.println("Food remaining " + foodRemaining);
+        }        
 
-        
-
-    }
-   
+    }   
 
     public void addAnt(Ant ant){
         if(ant != null){
@@ -61,8 +59,7 @@ public class AntColony extends Entity{
     }
     public void removeAnt(Ant ant){
         if(ant != null){
-            antList.remove(ant);
-            
+            antList.remove(ant);            
             gameEngine.removeEntity(ant);
         }
     }
