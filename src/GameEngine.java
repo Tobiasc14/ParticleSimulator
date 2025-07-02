@@ -15,10 +15,10 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 2000;
+    public int numParticles = 1000;
     public double tempDistance;
-    double G = .5; // gravitational constant
-    double drag = .59; //.1 is a good value 
+    double G = 1; // gravitational constant
+    double drag = .99; //.1 is a good value 
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;

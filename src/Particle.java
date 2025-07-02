@@ -25,8 +25,8 @@ public class Particle extends Entity{
 
 
     public void setDefaultValues(){
-        speed = 5;        
-        mass = Math.random()*4+1;
+        speed = 1;        
+        mass = Math.random()*36+1;
         sizeX = (int)Math.sqrt(mass);
         sizeY = (int)Math.sqrt(mass);        
         acceleration = 0;
@@ -34,8 +34,8 @@ public class Particle extends Entity{
         y = (Math.random() * (gameEngine.screenHeight - sizeY-1));
         defaultSpeed = 0;
         angle = Math.random()*2*Math.PI;
-        xSpeed = Math.random()*speed/2;
-        ySpeed = Math.random()*speed/2;        
+        xSpeed = Math.random()*speed-speed/2.0;
+        ySpeed = Math.random()*speed-speed/2.0;        
         setBounds();
         clamp();
         name = "particle";      
