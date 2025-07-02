@@ -49,8 +49,8 @@ public class Particle extends Entity{
         
     }
     public void updateState(){ 
-        y=(int)(y+ySpeed);
-        x=(int)(x+xSpeed);
+        y=(y+ySpeed);
+        x=(x+xSpeed);
         clamp();
         hitbox.setBounds((int)x, (int)y, sizeX, sizeY);
         
@@ -58,25 +58,27 @@ public class Particle extends Entity{
 
     
 
-    public void clamp(){
-        if (x < 0){
-            x=gameEngine.screenWidth+x;
-        }
-        if (y < 0){
-            y = gameEngine.screenHeight+y;
-        }
-        if (x>=gameEngine.screenWidth-sizeX){
-            x=x-gameEngine.screenWidth-sizeX;
-        }
-        if (y>=gameEngine.screenHeight-sizeY){
-            y = y-gameEngine.screenHeight-sizeY;
-        }
-        if (xSpeed > 20){
-            xSpeed = 20;
-        }
-        if (ySpeed > 20){
-            ySpeed = 20;
-        }
+    public void clamp() {
+    // Wrap X
+    if (x < 0) {
+        System.out.println("X Value: " + x);
+        x += gameEngine.screenWidth;
+    } else if (x >= gameEngine.screenWidth) {
+        x -= gameEngine.screenWidth;
     }
+
+    // Wrap Y
+    if (y < 0) {
+        System.out.println("Y Value: " + y);
+        y += gameEngine.screenHeight;
+
+    } else if (y >= gameEngine.screenHeight) {
+        y -= gameEngine.screenHeight;
+    }
+
+    // Clamp speed in both directions
+    xSpeed = Math.max(-20, Math.min(xSpeed, 20));
+    ySpeed = Math.max(-20, Math.min(ySpeed, 20));
+}
 
 }
