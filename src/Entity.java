@@ -21,6 +21,7 @@ public class Entity {
     public int spriteNumber = 1;
     public int spriteUpdateFrequency = 8;
     public int spriteDirectionChangeFrequency = 20;
+    public double angle;
 
 
 

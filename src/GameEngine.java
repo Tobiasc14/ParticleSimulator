@@ -1,186 +1,137 @@
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
+import java.awt.Toolkit;
+import java.awt.image.BufferStrategy;
 
-import javax.swing.JPanel;
+public class GameEngine extends Canvas implements Runnable{
 
-public class GameEngine extends JPanel implements Runnable{
-
-    //Below if for if we want our game to have distinct "tile" spaces
     final int originalTileSize = 16;
     final int scale = 1;
-    public final int tileSize = originalTileSize * scale; //32 pixel by 32 pixel tiles
+    public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 80;
     public final int maxScreenRow = 60;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
-    public int numRedAnts, numBlueAnts, numGreenAnts, numPhysicsAnts, numPlayerAnts, numCenterSeekingPhysAnts, totalAnts;
-    
-    
+
+    public int numParticles = 500;
+
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    
-    //Adds entities
-    //Player player = new Player(this, keyHandler);
-    public Entity [] entityList;
-    public ArrayList<Food> foodList;
-    RedAntColony redColony;
-    BlueAntColony blueColony;
-    GreenAntColony greenColony;
-    int FPS = 60;  
-    
 
-
-    //CenterSeekingPhysicsAnt centerPhysicsAnt = new CenterSeekingPhysicsAnt(this, keyHandler);
-    //PhysicsAnt physicsAnt = new PhysicsAnt(this, keyHandler);
+    public Entity[] entityList;
     
-    public GameEngine(){
+    
+    int FPS = 60;
+
+    public GameEngine() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.darkGray);
-        this.setDoubleBuffered(true);
-        //The KeyHandler class defines a key listener, we then add that to the game engine
-        this.addKeyListener(keyHandler);
         this.setFocusable(true);
-        setNumAnts();
-        foodList = new ArrayList<Food>();
-        entityList = new Entity[totalAnts+3];
-        redColony = new RedAntColony(this, numRedAnts);
-        blueColony = new BlueAntColony(this, numBlueAnts);
-        greenColony = new GreenAntColony(this, numGreenAnts);
-        entityList[0] = redColony;
-        entityList[1] = blueColony;
-        entityList[2] = greenColony;
+        this.addKeyListener(keyHandler);        
+        
+        entityList = new Entity[numParticles+1];        
+        
 
-        for (int i =3; i < entityList.length; i++){
-            if (i < entityList.length-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
-                entityList[i] = new RedAnt(this);
-                redColony.addAnt((Ant) entityList[i]);
-            }
-            else if(i>=entityList.length-(numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
-                entityList[i] = new BlueAnt(this);
-                blueColony.addAnt((Ant) entityList[i]);
-            }
-            else if(i>=entityList.length-(numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts)){
-                entityList[i] = new GreenAnt(this);
-                greenColony.addAnt((Ant) entityList[i]);
-            }
-            else if(i>=entityList.length-(numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numCenterSeekingPhysAnts+numPlayerAnts)){
-                entityList[i] = new PhysicsAnt(this, keyHandler);
-            }
-            else if(i>=entityList.length-(numCenterSeekingPhysAnts+numPlayerAnts) & i<entityList.length-(numPlayerAnts)){
-                entityList[i] = new CenterSeekingPhysicsAnt(this, keyHandler);
-            }
-            else if(i>=entityList.length-(numPlayerAnts)){
-                entityList[i] = new Player(this, keyHandler);
+        for (int i = 0; i < entityList.length; i++) {
+            if (i < numParticles) {
+                entityList[i] = new Particle(this);
+                
+                
+            } else {
+                //entityList[i] = new Player(this, keyHandler);
             }
         }
-        for (int i = 0; i < 1000; i++){
-            foodList.add(new Food(this, 10));
-        }
+
+      
     }
 
-    public void startGameThread(){
+    public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
+    }    
 
-    }
-    public void setNumAnts(){
-        numRedAnts = 1;
-        numBlueAnts =0;
-        numGreenAnts = 0;
-        numPhysicsAnts = 0;
-        numCenterSeekingPhysAnts = 0;
-        numPlayerAnts = 1;
-        totalAnts = numRedAnts+numBlueAnts+numGreenAnts+numPhysicsAnts+numCenterSeekingPhysAnts+numPlayerAnts;
-    }
     @Override
     public void run() {
-       double drawInterval = 1000000000/FPS;
-       double delta = 0;
-       long lastTime = System.nanoTime();
-       long currentTime;
-       //Timer is how often the FPS counter updates
-       //Draw count is the number of frames drawn
-       long timer = 0;
-       int drawCount = 0;
+        this.createBufferStrategy(3);
+    BufferStrategy bs = this.getBufferStrategy();
 
-        while(gameThread != null){
-            //gets current time in nanoseconds
-            currentTime = System.nanoTime();
-            //Calculates total time that's passed since last drawing as farctino of desired time pass
-            delta += (currentTime - lastTime) / drawInterval;
-            timer += (currentTime - lastTime);
+    final long drawInterval = 1_000_000_000 / FPS; // 16,666,666 ns for 60 FPS
+    long lastTime = System.nanoTime();
+    long timer = System.currentTimeMillis();
+    int drawCount = 0;
+
+    while (gameThread != null) {
+        long currentTime = System.nanoTime();
+        long elapsed = currentTime - lastTime;
+
+        if (elapsed >= drawInterval) {
             lastTime = currentTime;
-            //When desired amount of time has passed, execute game loop
-            if(delta >= 1){
-                updateState();
-                repaint();
-                delta--;
-                //Ever time a frame us drawn add to drawCount
-                drawCount++;
-            }
-            //Update FPS counter if more than 1s has passed
-            if(timer >= 1000000000){
-                System.out.println("FPS " + drawCount);
-                drawCount = 0;
-                timer = 0;
-            }
-            
 
+            long start = System.nanoTime();
+            updateState();
+            draw(bs);
+            long end = System.nanoTime();
+            System.out.printf("Frame time: %.3f ms%n", (end - start) / 1e6);
 
+            drawCount++;
+        } else {
+            // Sleep until it's time to render the next frame
+            long sleepTime = (drawInterval - elapsed) / 1_000_000;
+            if (sleepTime > 0) {
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
+        // Report FPS every second
+        if (System.currentTimeMillis() - timer >= 1000) {
+            System.out.println("FPS: " + drawCount);
+            drawCount = 0;
+            timer += 1000;
+        }
+    }
     }
 
-    public void updateState(){
-        //player.updateState();
-        for (int i = 0; i < entityList.length; i++){
-            if (entityList[i] != null){
-                entityList[i].updateState();
+    public void updateState() {
+        for (Entity entity : entityList) {
+            if (entity != null) {
+                entity.updateState();
             }
-            
         }
-        //physAnt.updateState();
-        //centerPhysicsAnt.updateState();
-        
-
     }
 
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        //player.draw(g2);
-        for (int i = 0; i < foodList.size(); i++){
-            if(foodList.get(i) != null){
-                foodList.get(i).draw(g2);
-            }
-        }
-        for (int i = 0; i < entityList.length; i++){
-            if (entityList[i] != null){
-                entityList[i].draw(g2);
-            }
-            
-        }
-        
-    }
-        //physAnt.draw(g2);
-        //centerPhysicsAnt.draw(g2);
-          
+    public void draw(BufferStrategy bs) {
+        do {
+            do {
+                Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
+                g2.setColor(getBackground());
+                g2.fillRect(0, 0, getWidth(), getHeight());
 
-    public void removeEntity(Entity entity){
-        if (entity != null){
-            for(int i = 0; i< entityList.length; i++){                
-                if(entity.equals(entityList[i])){                    
+                for (Entity entity : entityList) {
+                    if (entity != null) entity.draw(g2);
+                }
+
+                g2.dispose();
+            } while (bs.contentsRestored());
+            bs.show();
+            Toolkit.getDefaultToolkit().sync();
+        } while (bs.contentsLost());
+    }
+
+    public void removeEntity(Entity entity) {
+        if (entity != null) {
+            for (int i = 0; i < entityList.length; i++) {
+                if (entity.equals(entityList[i])) {
                     entityList[i] = null;
-                    i = entityList.length-1;
+                    break;
                 }
             }
         }
     }
-
-
-
 }

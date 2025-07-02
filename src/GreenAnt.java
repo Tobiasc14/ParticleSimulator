@@ -33,23 +33,23 @@ public class GreenAnt extends Ant{
 
     public void getSpriteImage(){
         try {
-            up1 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntUp.png"));
-            up2 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntUp2.png"));
-            down1 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntDown.png"));
-            down2 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntDown2.png"));
-            left1 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntLeft.png"));
-            left2 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntLeft2.png"));
-            right1 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntRight.png"));
-            right2 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntRight2.png"));
+            up1 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntUp.png"));
+            up2 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntUp2.png"));
+            down1 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntDown.png"));
+            down2 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntDown2.png"));
+            left1 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntLeft.png"));
+            left2 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntLeft2.png"));
+            right1 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntRight.png"));
+            right2 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntRight2.png"));
             
-            upRight1 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntUpRight.png"));
-            upRight2 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntUpRight2.png"));
-            downLeft1 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntDownLeft.png"));
-            downLeft2 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntDownLeft2.png"));
-            upLeft1 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntUpLeft.png"));
-            upLeft2 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntUpLeft2.png"));
-            downRight1 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntDownRight.png"));
-            downRight2 = (BufferedImage) ImageIO.read(new File("images/GreenAnt/AntDownRight2.png"));
+            upRight1 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntUpRight.png"));
+            upRight2 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntUpRight2.png"));
+            downLeft1 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntDownLeft.png"));
+            downLeft2 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntDownLeft2.png"));
+            upLeft1 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntUpLeft.png"));
+            upLeft2 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntUpLeft2.png"));
+            downRight1 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntDownRight.png"));
+            downRight2 = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/GreenAnt/AntDownRight2.png"));
 
         } catch (IOException e) {            
             e.printStackTrace();

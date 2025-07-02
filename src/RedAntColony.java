@@ -2,7 +2,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 public class RedAntColony extends AntColony{
@@ -29,10 +28,11 @@ public class RedAntColony extends AntColony{
 
     public void getSpriteImage(){
         try {
-            image = (BufferedImage) ImageIO.read(new File("images/AntColony/RedAntColony.png"));
+            image = (BufferedImage) ImageIO.read(new File(System.getProperty("user.dir") + "/images/AntColony/RedAntColony.png"));
         } catch (IOException e) {            
             e.printStackTrace();
-        };
+            
+        }
     }
     public void draw(Graphics2D g2){
         g2.drawImage(image, x, y, sizeX, sizeY, null);

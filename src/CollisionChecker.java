@@ -9,7 +9,6 @@ public class CollisionChecker {
     }
     public void checkAllCollisions(Entity entity){
         checkCollisionAllEntities(entity);
-        checkCollisionsAllObjects(entity);
 
     }
     public void checkCollisionAllEntities(Entity entity){
@@ -32,34 +31,7 @@ public class CollisionChecker {
         } 
         
     }
-    public void checkCollisionsAllObjects(Entity entity){
-        if (entity != null){
-            move(entity);
-            for(int i = 0; i < gameEngine.foodList.size(); i++){
-                if (entity.hitbox.intersects(gameEngine.foodList.get(i).hitbox)){
-                    
-                    switch(entity.name){
-                        
-                        case "redAnt":
-                            ((RedAntColony) gameEngine.entityList[0]).foodRemaining = ((RedAntColony) gameEngine.entityList[0]).foodRemaining + gameEngine.foodList.get(i).foodValue;
-                            gameEngine.foodList.remove(i);
-                            break;
-                        case "blueAnt":
-                            ((BlueAntColony) gameEngine.entityList[1]).foodRemaining = ((BlueAntColony) gameEngine.entityList[1]).foodRemaining + gameEngine.foodList.get(i).foodValue;
-                            gameEngine.foodList.remove(i);
-                            break;
-                        case "greenAnt":
-                            ((GreenAntColony) gameEngine.entityList[2]).foodRemaining = ((GreenAntColony) gameEngine.entityList[2]).foodRemaining + gameEngine.foodList.get(i).foodValue; 
-                            gameEngine.foodList.remove(i);
-                            break;
-                    
-                    }
-                }
-            }
-            undoMove(entity);
-            
-        }
-    }
+   
 
     
     public void move(Entity entity){
