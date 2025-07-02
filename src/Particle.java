@@ -30,8 +30,8 @@ public class Particle extends Entity{
         sizeY = 1;
         mass = 20;
         acceleration = 0;
-        x = (Math.random() * (gameEngine.screenWidth - sizeX));
-        y = (Math.random() * (gameEngine.screenHeight - sizeY));
+        x = (Math.random() * (gameEngine.screenWidth - sizeX-1));
+        y = (Math.random() * (gameEngine.screenHeight - sizeY-1));
         defaultSpeed = 0;
         angle = Math.random()*2*Math.PI;
         xSpeed = 0;
@@ -59,17 +59,23 @@ public class Particle extends Entity{
     
 
     public void clamp(){
-        if (x <= 0){
-            x=1;
+        if (x < 0){
+            x=gameEngine.screenWidth+x;
         }
-        if (y <= 0){
-            y = 1;
+        if (y < 0){
+            y = gameEngine.screenHeight+y;
         }
         if (x>=gameEngine.screenWidth-sizeX){
-            x=gameEngine.screenWidth-sizeX-1;
+            x=x-gameEngine.screenWidth-sizeX;
         }
         if (y>=gameEngine.screenHeight-sizeY){
-            y = gameEngine.screenHeight-sizeY-1;
+            y = y-gameEngine.screenHeight-sizeY;
+        }
+        if (xSpeed > 20){
+            xSpeed = 20;
+        }
+        if (ySpeed > 20){
+            ySpeed = 20;
         }
     }
 

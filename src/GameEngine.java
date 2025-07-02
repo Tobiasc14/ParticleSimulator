@@ -15,8 +15,10 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 50;
+    public int numParticles = 500;
     public double tempDistance;
+    double G = 1.0; // gravitational constant
+    double drag = .2;
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
@@ -100,7 +102,7 @@ public class GameEngine extends Canvas implements Runnable{
     }
 
     public void updateState() {
-    double G = 2.0; // gravitational constant
+    
     for (Entity entity : entityList) {
         if (entity == null) continue;
 
@@ -111,20 +113,31 @@ public class GameEngine extends Canvas implements Runnable{
             double dy = entity2.y - entity.y;
             double distanceSquared = dx * dx + dy * dy;
 
-            if (distanceSquared == 0) continue; // skip self or overlapping particles
+            if (distanceSquared <1){
 
-            double distance = Math.sqrt(distanceSquared);
+                entity.xSpeed = (entity.xSpeed*entity.mass + entity2.xSpeed*entity2.mass)/(entity.mass+entity2.mass);
+                entity.ySpeed = (entity.ySpeed*entity.mass + entity2.ySpeed*entity2.mass)/(entity.mass+entity2.mass);
+                entity.mass = entity.mass+entity2.mass;
 
-            double acceleration = G * entity2.mass / distanceSquared;
 
-            // Add directional acceleration
-            entity.xAcceleration += acceleration * dx / distance;
-            entity.yAcceleration += acceleration * dy / distance;
+                removeEntity(entity2);
+
+            } // skip self or overlapping particles
+            else{
+                double distance = Math.sqrt(distanceSquared);
+
+                double acceleration = G * entity2.mass / distanceSquared;
+
+                // Add directional acceleration
+                entity.xAcceleration += acceleration * dx / distance;
+                entity.yAcceleration += acceleration * dy / distance;
+            }
+            
         }
 
         // Apply acceleration to velocity
-        entity.xSpeed += entity.xAcceleration / 60;
-        entity.ySpeed += entity.yAcceleration / 60;
+        entity.xSpeed += entity.xAcceleration / 10 * drag;
+        entity.ySpeed += entity.yAcceleration / 10 * drag;
 
         // Debug output
         System.out.printf("xAcc: %.3f, xSpd: %.3f | yAcc: %.3f, ySpd: %.3f\n",
