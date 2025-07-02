@@ -15,7 +15,7 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 20;
+    public int numParticles = 200;
     public double tempDistance;
     double G = 1.0; // gravitational constant
     double drag = .5;
@@ -113,11 +113,16 @@ public class GameEngine extends Canvas implements Runnable{
             double dy = entity2.y - entity.y;
             double distanceSquared = dx * dx + dy * dy;
 
-            if (distanceSquared <1){
+            if (entity.hitbox.intersects(entity2.hitbox)){
 
                 entity.xSpeed = (entity.xSpeed*entity.mass + entity2.xSpeed*entity2.mass)/(entity.mass+entity2.mass);
                 entity.ySpeed = (entity.ySpeed*entity.mass + entity2.ySpeed*entity2.mass)/(entity.mass+entity2.mass);
                 entity.mass = entity.mass+entity2.mass;
+                entity.sizeX=(int)Math.sqrt(entity.mass);
+                entity.sizeY=(int)Math.sqrt(entity.mass);
+                
+                //entity.sizeX+=entity2.sizeX;
+                //entity.sizeY+=entity2.sizeY;
 
 
                 removeEntity(entity2);
@@ -136,8 +141,8 @@ public class GameEngine extends Canvas implements Runnable{
         }
 
         // Apply acceleration to velocity
-        entity.xSpeed += entity.xAcceleration / 10 * drag;
-        entity.ySpeed += entity.yAcceleration / 10 * drag;
+        entity.xSpeed += entity.xAcceleration * drag/ 10 ;
+        entity.ySpeed += entity.yAcceleration * drag/ 10 ;
 
         // Debug output
         //System.out.printf("xAcc: %.3f, xSpd: %.3f | yAcc: %.3f, ySpd: %.3f\n",
@@ -179,6 +184,14 @@ public class GameEngine extends Canvas implements Runnable{
                     break;
                 }
             }
+        }
+    }
+    public int max(int a, int b){
+        if (a>=b){
+            return a;
+        }
+        else{
+            return b;
         }
     }
 }

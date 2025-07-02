@@ -26,9 +26,9 @@ public class Particle extends Entity{
 
     public void setDefaultValues(){
         speed = 0;        
-        sizeX = 1;
-        sizeY = 1;
-        mass = 20;
+        mass = 1;
+        sizeX = (int)Math.sqrt(mass);
+        sizeY = (int)Math.sqrt(mass);        
         acceleration = 0;
         x = (Math.random() * (gameEngine.screenWidth - sizeX-1));
         y = (Math.random() * (gameEngine.screenHeight - sizeY-1));
