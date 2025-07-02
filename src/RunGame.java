@@ -6,7 +6,7 @@ public class RunGame {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Ant Simulator");
+        window.setTitle("Particle Simulator");
 
         GameEngine gameEngine = new GameEngine();
         gameEngine.setSize(gameEngine.screenWidth, gameEngine.screenHeight);

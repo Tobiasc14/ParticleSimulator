@@ -14,6 +14,7 @@ public class Particle extends Entity{
 
     GameEngine gameEngine;
     double angle;
+    int mass;
     
 
     public Particle(GameEngine gameEngine){
@@ -27,6 +28,7 @@ public class Particle extends Entity{
         speed = 0;        
         sizeX = 1;
         sizeY = 1;
+        mass = 
         x = (int) (gameEngine.screenWidth*Math.random())-sizeX;
         y = (int) (gameEngine.screenHeight*Math.random())-sizeY;
         defaultSpeed = 7;
