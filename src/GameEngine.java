@@ -15,10 +15,10 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 200;
+    public int numParticles = 2000;
     public double tempDistance;
-    double G = 1.0; // gravitational constant
-    double drag = .5;
+    double G = .5; // gravitational constant
+    double drag = .59; //.1 is a good value 
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
@@ -117,12 +117,14 @@ public class GameEngine extends Canvas implements Runnable{
 
                 entity.xSpeed = (entity.xSpeed*entity.mass + entity2.xSpeed*entity2.mass)/(entity.mass+entity2.mass);
                 entity.ySpeed = (entity.ySpeed*entity.mass + entity2.ySpeed*entity2.mass)/(entity.mass+entity2.mass);
+                
+                entity.x = (entity.x * entity.mass + entity2.x * entity2.mass) / (entity.mass + entity2.mass);
+                entity.y = (entity.y * entity.mass + entity2.y * entity2.mass) / (entity.mass + entity2.mass);
                 entity.mass = entity.mass+entity2.mass;
                 entity.sizeX=(int)Math.sqrt(entity.mass);
                 entity.sizeY=(int)Math.sqrt(entity.mass);
                 
-                //entity.sizeX+=entity2.sizeX;
-                //entity.sizeY+=entity2.sizeY;
+                
 
 
                 removeEntity(entity2);
