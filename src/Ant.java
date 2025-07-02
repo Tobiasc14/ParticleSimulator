@@ -34,7 +34,7 @@ public class Ant extends Entity{
         }
         
         clamp();
-        hitbox.setBounds(x, y, sizeX, sizeY);
+        hitbox.setBounds((int)x, (int)y, sizeX, sizeY);
         
     }
     public void updateDirection(){
@@ -209,7 +209,7 @@ public class Ant extends Entity{
             break; 
 
         }
-        g2.drawImage(image, x, y, sizeX, sizeY, null);
+        g2.drawImage(image, (int)x, (int)y, sizeX, sizeY, null);
         //drawHitbox(g2);
         
 

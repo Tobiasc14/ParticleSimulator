@@ -38,8 +38,8 @@ public class CenterSeekingPhysicsAnt extends PhysicsAnt{
                 else if(x>(gameEngine.screenWidth-16)/2){
                     xSpeed=xSpeed-1;                
                 }            
-                x = x+xSpeed; 
-                y = y+ySpeed;        
+                y=(int)(y+ySpeed);
+                x=(int)(x+xSpeed);      
                 physicsCounter=0;
             }
         }

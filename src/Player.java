@@ -41,7 +41,7 @@ public class Player extends Ant {
             updateDirection();             
         }        
         clamp();
-        hitbox.setBounds(x, y, sizeX, sizeY);        
+        hitbox.setBounds((int)x,(int) y, sizeX, sizeY);        
 
     }
     

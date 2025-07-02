@@ -39,7 +39,7 @@ public class PhysicsAnt extends Ant{
         checkCollisionsThenMove();
         //updateDirection();
         clamp();
-        hitbox.setBounds(x, y, sizeX, sizeY);
+        hitbox.setBounds((int)x,(int) y, sizeX, sizeY);
     }
     public void checkCollisionsThenMove(){
         gameEngine.collisionChecker.checkCollisionAllEntities(this);
@@ -70,12 +70,12 @@ public class PhysicsAnt extends Ant{
                     
                 }
                 else{
-                    y=y-ySpeed;
+                    y=(int)(y-ySpeed);
                 } 
                 
                 physicsCounter = 0;
             }
-            y=y+ySpeed;  
+            y=(int)(y+ySpeed);  
             
         }
         

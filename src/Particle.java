@@ -13,8 +13,8 @@ import java.awt.Graphics2D;
 public class Particle extends Entity{
 
     GameEngine gameEngine;
-    double angle;
-    int mass;
+    
+    
     
 
     public Particle(GameEngine gameEngine){
@@ -28,13 +28,14 @@ public class Particle extends Entity{
         speed = 0;        
         sizeX = 1;
         sizeY = 1;
-        mass = 
-        x = (int) (gameEngine.screenWidth*Math.random())-sizeX;
-        y = (int) (gameEngine.screenHeight*Math.random())-sizeY;
-        defaultSpeed = 7;
+        mass = 20;
+        acceleration = 0;
+        x = (Math.random() * (gameEngine.screenWidth - sizeX));
+        y = (Math.random() * (gameEngine.screenHeight - sizeY));
+        defaultSpeed = 0;
         angle = Math.random()*2*Math.PI;
-        xSpeed = (int)(defaultSpeed*Math.cos(angle));
-        ySpeed = (int)(defaultSpeed*Math.sin(angle));        
+        xSpeed = 0;
+        ySpeed = 0;        
         setBounds();
         clamp();
         name = "particle";      
@@ -48,27 +49,27 @@ public class Particle extends Entity{
         
     }
     public void updateState(){ 
-        y=y+ySpeed;
-        x=x+xSpeed;
+        y=(int)(y+ySpeed);
+        x=(int)(x+xSpeed);
         clamp();
-        hitbox.setBounds(x, y, sizeX, sizeY);
+        hitbox.setBounds((int)x, (int)y, sizeX, sizeY);
         
     }
 
     
 
     public void clamp(){
-        if (x < 0){
-            x=x+gameEngine.screenWidth;
+        if (x <= 0){
+            x=1;
         }
-        if (y < 0){
-            y = y+gameEngine.screenHeight;
+        if (y <= 0){
+            y = 1;
         }
-        if (x>gameEngine.screenWidth-sizeX){
-            x=x-gameEngine.screenWidth;
+        if (x>=gameEngine.screenWidth-sizeX){
+            x=gameEngine.screenWidth-sizeX-1;
         }
-        if (y>gameEngine.screenHeight-sizeY){
-            y = y-gameEngine.screenHeight;
+        if (y>=gameEngine.screenHeight-sizeY){
+            y = gameEngine.screenHeight-sizeY-1;
         }
     }
 

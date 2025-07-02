@@ -16,6 +16,7 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenHeight = tileSize * maxScreenRow;
 
     public int numParticles = 50;
+    public double tempDistance;
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
@@ -99,12 +100,45 @@ public class GameEngine extends Canvas implements Runnable{
     }
 
     public void updateState() {
-        for (Entity entity : entityList) {
-            if (entity != null) {
-                entity.updateState();
-            }
+    double G = 2.0; // gravitational constant
+    for (Entity entity : entityList) {
+        if (entity == null) continue;
+
+        for (Entity entity2 : entityList) {
+            if (entity2 == null || entity == entity2) continue;
+
+            double dx = entity2.x - entity.x;
+            double dy = entity2.y - entity.y;
+            double distanceSquared = dx * dx + dy * dy;
+
+            if (distanceSquared == 0) continue; // skip self or overlapping particles
+
+            double distance = Math.sqrt(distanceSquared);
+
+            double acceleration = G * entity2.mass / distanceSquared;
+
+            // Add directional acceleration
+            entity.xAcceleration += acceleration * dx / distance;
+            entity.yAcceleration += acceleration * dy / distance;
         }
+
+        // Apply acceleration to velocity
+        entity.xSpeed += entity.xAcceleration / 60;
+        entity.ySpeed += entity.yAcceleration / 60;
+
+        // Debug output
+        System.out.printf("xAcc: %.3f, xSpd: %.3f | yAcc: %.3f, ySpd: %.3f\n",
+                          entity.xAcceleration, entity.xSpeed,
+                          entity.yAcceleration, entity.ySpeed);
+
+        entity.updateState();
+
+        // Reset for next frame
+        entity.acceleration = 0;
+        entity.xAcceleration = 0;
+        entity.yAcceleration = 0;
     }
+}
 
     public void draw(BufferStrategy bs) {
         do {
