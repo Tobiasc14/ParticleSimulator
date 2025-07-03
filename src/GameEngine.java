@@ -117,7 +117,7 @@ public class GameEngine extends Canvas implements Runnable{
 
                 if(entity2.kineticEnergy > entity.gravBindingEnergy){
                     if (entity2.kineticEnergy > entity.gravBindingEnergy) {
-                        if (entity.mass < 5) continue; // Prevent endless splits
+                        if (entity.mass < 1) continue; // Prevent endless splits
 
                         double childMass = entity.mass / 2.0;
 
@@ -133,7 +133,7 @@ public class GameEngine extends Canvas implements Runnable{
                             fragment.clamp(); // wrap position if needed
                             fragment.setBounds();                           
 
-                            entityList.add(fragment);
+                            toAdd.add(fragment);
                         }
 
                         entityList.remove(entity); // Don't forget to remove the one that fractured
@@ -189,7 +189,7 @@ public class GameEngine extends Canvas implements Runnable{
         
     }
         
-    
+    entityList.addAll(toAdd);
         
         
     }

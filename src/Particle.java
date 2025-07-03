@@ -25,7 +25,7 @@ public class Particle extends Entity{
 
 
     public void setDefaultValues(){
-        speed = 4;        
+        speed = 5;        
         mass = Math.random()*10+1;
         sizeX = (int)Math.sqrt(mass);
         sizeY = (int)Math.sqrt(mass);        
