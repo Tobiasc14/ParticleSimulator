@@ -25,8 +25,8 @@ public class Particle extends Entity{
 
 
     public void setDefaultValues(){
-        speed = 5;        
-        mass = Math.random()*10+1;
+        speed = 1;        
+        mass = Math.random()*3+1;
         sizeX = (int)Math.sqrt(mass);
         sizeY = (int)Math.sqrt(mass);        
         acceleration = 0;
@@ -81,8 +81,8 @@ public class Particle extends Entity{
     }
 
     // Clamp speed in both directions
-    //xSpeed = Math.max(-20, Math.min(xSpeed, 20));
-    //ySpeed = Math.max(-20, Math.min(ySpeed, 20));
+    xSpeed = Math.max(-20, Math.min(xSpeed, 20));
+    ySpeed = Math.max(-20, Math.min(ySpeed, 20));
 }
 
 }

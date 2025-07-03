@@ -17,10 +17,10 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 500;
+    public int numParticles = 750;
     public double tempDistance;
     public double G = 1; // gravitational constant
-    double drag = .75; //.75 is a good value 
+    double drag = .95; //.75 is a good value 
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
@@ -97,102 +97,82 @@ public class GameEngine extends Canvas implements Runnable{
     }
     }
 
+    
     public void updateState() {
     List<Entity> toAdd = new ArrayList<>();
     List<Entity> toRemove = new ArrayList<>();
-    for (int i = 0; i < entityList.size(); i++){
-        Entity entity = entityList.get(i);
-        if (entity == null) continue;
 
-        for (int j =0; j < entityList.size(); j++) {
+    for (int i = 0; i < entityList.size(); i++) {
+        Entity entity = entityList.get(i);
+        if (entity == null || toRemove.contains(entity)) continue;
+
+        for (int j = 0; j < entityList.size(); j++) {
             Entity entity2 = entityList.get(j);
-            
-            if (entity2 == null || entity == entity2) continue;
+            if (entity2 == null || entity == entity2 || toRemove.contains(entity2)) continue;
 
             double dx = entity2.x - entity.x;
             double dy = entity2.y - entity.y;
             double distanceSquared = dx * dx + dy * dy;
 
-            if (entity.hitbox.intersects(entity2.hitbox)){
+            if (entity.hitbox.intersects(entity2.hitbox)) {
+                if (entity2.kineticEnergy + entity.kineticEnergy > entity.gravBindingEnergy) {
+                    if (entity.mass < 1) continue;
 
-                if(entity2.kineticEnergy > entity.gravBindingEnergy){
-                    if (entity2.kineticEnergy > entity.gravBindingEnergy) {
-                        if (entity.mass < 1) continue; // Prevent endless splits
+                    double childMass = entity.mass / 2.0;
+                    if (childMass < 1) continue;
 
-                        double childMass = entity.mass / 2.0;
-
-                        for (int k = 0; k < 2; k++) {
-                            Particle fragment = new Particle(this);
-                            fragment.mass = Math.max(childMass, 1);
-                            fragment.x = entity.x + Math.random() * 10 - 5;
-                            fragment.y = entity.y + Math.random() * 10 - 5;
-                            fragment.xSpeed = entity.xSpeed + Math.random() - 0.5;
-                            fragment.ySpeed = entity.ySpeed + Math.random() - 0.5;
-                            fragment.sizeX = (int)Math.sqrt(fragment.mass);
-                            fragment.sizeY = (int)Math.sqrt(fragment.mass);
-                            fragment.clamp(); // wrap position if needed
-                            fragment.setBounds();                           
-
-                            toAdd.add(fragment);
-                        }
-
-                        entityList.remove(entity); // Don't forget to remove the one that fractured
-                        
+                    for (int k = 0; k < 2; k++) {
+                        Particle fragment = new Particle(this);
+                        fragment.mass = Math.max(childMass, 1);
+                        fragment.x = entity.x + Math.random() * 10 - 5;
+                        fragment.y = entity.y + Math.random() * 10 - 5;
+                        fragment.xSpeed = entity.xSpeed + Math.random() - 0.5;
+                        fragment.ySpeed = entity.ySpeed + Math.random() - 0.5;
+                        fragment.sizeX = (int)Math.sqrt(fragment.mass);
+                        fragment.sizeY = (int)Math.sqrt(fragment.mass);
+                        fragment.clamp();
+                        fragment.setBounds();
+                        //System.out.println("Making Fragment");
+                        toAdd.add(fragment);
+                        //System.out.println("Added Fragment to addList");
                     }
 
-                }
-                else{
-                    entity.xSpeed = (entity.xSpeed*entity.mass + entity2.xSpeed*entity2.mass)/(entity.mass+entity2.mass);
-                    entity.ySpeed = (entity.ySpeed*entity.mass + entity2.ySpeed*entity2.mass)/(entity.mass+entity2.mass);
-                    
+                    //System.out.println("Removing collided entity");
+                    toRemove.add(entity);
+                    break; // Stop processing this entity if it's destroyed
+                } else {
+                    // Merge logic
+                    entity.xSpeed = (entity.xSpeed * entity.mass + entity2.xSpeed * entity2.mass) / (entity.mass + entity2.mass);
+                    entity.ySpeed = (entity.ySpeed * entity.mass + entity2.ySpeed * entity2.mass) / (entity.mass + entity2.mass);
                     entity.x = (entity.x * entity.mass + entity2.x * entity2.mass) / (entity.mass + entity2.mass);
                     entity.y = (entity.y * entity.mass + entity2.y * entity2.mass) / (entity.mass + entity2.mass);
-                    entity.mass = entity.mass+entity2.mass;
-                    entity.sizeX=(int)Math.sqrt(entity.mass);
-                    entity.sizeY=(int)Math.sqrt(entity.mass);
-                    entityList.remove(entity2);
-                }           
-                
-
-
-                
-
-            } // skip self or overlapping particles
-            else{
+                    entity.mass = entity.mass + entity2.mass;
+                    entity.sizeX = (int)Math.sqrt(entity.mass);
+                    entity.sizeY = (int)Math.sqrt(entity.mass);
+                    toRemove.add(entity2);
+                }
+            } else {
                 double distance = Math.sqrt(distanceSquared);
-
                 double acceleration = G * entity2.mass / distanceSquared;
 
-                // Add directional acceleration
                 entity.xAcceleration += acceleration * dx / distance;
                 entity.yAcceleration += acceleration * dy / distance;
             }
-            
         }
-        
 
-        // Apply acceleration to velocity
-        entity.xSpeed += entity.xAcceleration * drag/ 10 ;
-        entity.ySpeed += entity.yAcceleration * drag/ 10 ;
-
-        // Debug output
-        //System.out.printf("xAcc: %.3f, xSpd: %.3f | yAcc: %.3f, ySpd: %.3f\n",
-                          //entity.xAcceleration, entity.xSpeed,
-                          //entity.yAcceleration, entity.ySpeed);
-
+        // Physics integration
+        entity.xSpeed += entity.xAcceleration * drag / 10;
+        entity.ySpeed += entity.yAcceleration * drag / 10;
         entity.updateState();
-
-        // Reset for next frame
         entity.acceleration = 0;
         entity.xAcceleration = 0;
         entity.yAcceleration = 0;
-        
     }
-        
+
+    entityList.removeAll(toRemove);
     entityList.addAll(toAdd);
-        
-        
-    }
+    //System.out.println("Added addList to entityList");
+}
     public double min(double a, double b){
         if(a < b){
             return a;
