@@ -16,11 +16,11 @@ public class CollisionChecker {
         if (entity != null){
             entity.hittingSomething = false;
             move(entity);
-            for(int i = 0; i < gameEngine.entityList.length; i++){
-                if(gameEngine.entityList[i] != null){
-                    if (entity.equals(gameEngine.entityList[i])){    
+            for(int i = 0; i < gameEngine.entityList.size(); i++){
+                if(gameEngine.entityList.get(i) != null){
+                    if (entity.equals(gameEngine.entityList.get(i))){    
                     }
-                    else if(entity.hitbox.intersects(gameEngine.entityList[i].hitbox)){
+                    else if(entity.hitbox.intersects(gameEngine.entityList.get(i).hitbox)){
                         entity.hittingSomething = true;     
                         //System.out.println("Collision Detected! " + gameEngine.entityList[i].name + " is hitting " + entity.name);           
                     }
@@ -31,6 +31,7 @@ public class CollisionChecker {
         } 
         
     }
+    
    
 
     

@@ -4,27 +4,29 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameEngine extends Canvas implements Runnable{
 
     final int originalTileSize = 16;
     final int scale = 1;
     public final int tileSize = originalTileSize * scale;
-    public final int maxScreenCol = 80;
-    public final int maxScreenRow = 60;
+    public final int maxScreenCol = 90;
+    public final int maxScreenRow = 67;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 1000;
+    public int numParticles = 500;
     public double tempDistance;
-    double G = 1; // gravitational constant
-    double drag = .99; //.1 is a good value 
+    public double G = 1; // gravitational constant
+    double drag = .75; //.75 is a good value 
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
 
-    public Entity[] entityList;
+    public ArrayList<Entity> entityList = new ArrayList<>();
     
     
     int FPS = 60;
@@ -35,21 +37,15 @@ public class GameEngine extends Canvas implements Runnable{
         this.setFocusable(true);
         this.addKeyListener(keyHandler);        
         
-        entityList = new Entity[numParticles+1];        
+        for (int i = 0; i < numParticles; i++) {
+            entityList.add(new Particle(this));
+            
+        }
         
-
-        for (int i = 0; i < entityList.length; i++) {
-            if (i < numParticles) {
-                entityList[i] = new Particle(this);
-                
-                
-            } else {
-                //entityList[i] = new Player(this, keyHandler);
-            }
         }
 
       
-    }
+    
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -102,11 +98,15 @@ public class GameEngine extends Canvas implements Runnable{
     }
 
     public void updateState() {
-    
-    for (Entity entity : entityList) {
+    List<Entity> toAdd = new ArrayList<>();
+    List<Entity> toRemove = new ArrayList<>();
+    for (int i = 0; i < entityList.size(); i++){
+        Entity entity = entityList.get(i);
         if (entity == null) continue;
 
-        for (Entity entity2 : entityList) {
+        for (int j =0; j < entityList.size(); j++) {
+            Entity entity2 = entityList.get(j);
+            
             if (entity2 == null || entity == entity2) continue;
 
             double dx = entity2.x - entity.x;
@@ -115,19 +115,47 @@ public class GameEngine extends Canvas implements Runnable{
 
             if (entity.hitbox.intersects(entity2.hitbox)){
 
-                entity.xSpeed = (entity.xSpeed*entity.mass + entity2.xSpeed*entity2.mass)/(entity.mass+entity2.mass);
-                entity.ySpeed = (entity.ySpeed*entity.mass + entity2.ySpeed*entity2.mass)/(entity.mass+entity2.mass);
-                
-                entity.x = (entity.x * entity.mass + entity2.x * entity2.mass) / (entity.mass + entity2.mass);
-                entity.y = (entity.y * entity.mass + entity2.y * entity2.mass) / (entity.mass + entity2.mass);
-                entity.mass = entity.mass+entity2.mass;
-                entity.sizeX=(int)Math.sqrt(entity.mass);
-                entity.sizeY=(int)Math.sqrt(entity.mass);
-                
+                if(entity2.kineticEnergy > entity.gravBindingEnergy){
+                    if (entity2.kineticEnergy > entity.gravBindingEnergy) {
+                        if (entity.mass < 5) continue; // Prevent endless splits
+
+                        double childMass = entity.mass / 2.0;
+
+                        for (int k = 0; k < 2; k++) {
+                            Particle fragment = new Particle(this);
+                            fragment.mass = Math.max(childMass, 1);
+                            fragment.x = entity.x + Math.random() * 10 - 5;
+                            fragment.y = entity.y + Math.random() * 10 - 5;
+                            fragment.xSpeed = entity.xSpeed + Math.random() - 0.5;
+                            fragment.ySpeed = entity.ySpeed + Math.random() - 0.5;
+                            fragment.sizeX = (int)Math.sqrt(fragment.mass);
+                            fragment.sizeY = (int)Math.sqrt(fragment.mass);
+                            fragment.clamp(); // wrap position if needed
+                            fragment.setBounds();                           
+
+                            entityList.add(fragment);
+                        }
+
+                        entityList.remove(entity); // Don't forget to remove the one that fractured
+                        
+                    }
+
+                }
+                else{
+                    entity.xSpeed = (entity.xSpeed*entity.mass + entity2.xSpeed*entity2.mass)/(entity.mass+entity2.mass);
+                    entity.ySpeed = (entity.ySpeed*entity.mass + entity2.ySpeed*entity2.mass)/(entity.mass+entity2.mass);
+                    
+                    entity.x = (entity.x * entity.mass + entity2.x * entity2.mass) / (entity.mass + entity2.mass);
+                    entity.y = (entity.y * entity.mass + entity2.y * entity2.mass) / (entity.mass + entity2.mass);
+                    entity.mass = entity.mass+entity2.mass;
+                    entity.sizeX=(int)Math.sqrt(entity.mass);
+                    entity.sizeY=(int)Math.sqrt(entity.mass);
+                    entityList.remove(entity2);
+                }           
                 
 
 
-                removeEntity(entity2);
+                
 
             } // skip self or overlapping particles
             else{
@@ -141,6 +169,7 @@ public class GameEngine extends Canvas implements Runnable{
             }
             
         }
+        
 
         // Apply acceleration to velocity
         entity.xSpeed += entity.xAcceleration * drag/ 10 ;
@@ -157,8 +186,30 @@ public class GameEngine extends Canvas implements Runnable{
         entity.acceleration = 0;
         entity.xAcceleration = 0;
         entity.yAcceleration = 0;
+        
     }
-}
+        
+    
+        
+        
+    }
+    public double min(double a, double b){
+        if(a < b){
+            return a;
+        }
+        else{
+            return b;
+        }
+    }
+
+    public void removeEntity(Entity entity) {
+        entityList.remove(entity);
+    }
+
+    public void spawnEntity(Entity entity){
+        entityList.add(entity);
+    }
+
 
     public void draw(BufferStrategy bs) {
         do {
@@ -178,17 +229,8 @@ public class GameEngine extends Canvas implements Runnable{
         } while (bs.contentsLost());
     }
 
-    public void removeEntity(Entity entity) {
-        if (entity != null) {
-            for (int i = 0; i < entityList.length; i++) {
-                if (entity.equals(entityList[i])) {
-                    entityList[i] = null;
-                    break;
-                }
-            }
-        }
-    }
-    public int max(int a, int b){
+    
+    public double max(double a, double b){
         if (a>=b){
             return a;
         }

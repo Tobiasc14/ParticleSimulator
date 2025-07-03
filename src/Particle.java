@@ -25,8 +25,8 @@ public class Particle extends Entity{
 
 
     public void setDefaultValues(){
-        speed = 1;        
-        mass = Math.random()*36+1;
+        speed = 4;        
+        mass = Math.random()*10+1;
         sizeX = (int)Math.sqrt(mass);
         sizeY = (int)Math.sqrt(mass);        
         acceleration = 0;
@@ -35,7 +35,9 @@ public class Particle extends Entity{
         defaultSpeed = 0;
         angle = Math.random()*2*Math.PI;
         xSpeed = Math.random()*speed-speed/2.0;
-        ySpeed = Math.random()*speed-speed/2.0;        
+        ySpeed = Math.random()*speed-speed/2.0;
+        kineticEnergy = 0.5*mass*speed*speed;
+        gravBindingEnergy= 0.6*gameEngine.G*mass*mass/sizeX/2;        
         setBounds();
         clamp();
         name = "particle";      
@@ -51,6 +53,8 @@ public class Particle extends Entity{
     public void updateState(){ 
         y=(y+ySpeed);
         x=(x+xSpeed);
+        kineticEnergy = 0.5 * mass * (xSpeed * xSpeed + ySpeed * ySpeed);
+        gravBindingEnergy = 0.6 * gameEngine.G * mass * mass / sizeX / 2;
         clamp();
         hitbox.setBounds((int)x, (int)y, sizeX, sizeY);
         
@@ -77,8 +81,8 @@ public class Particle extends Entity{
     }
 
     // Clamp speed in both directions
-    xSpeed = Math.max(-20, Math.min(xSpeed, 20));
-    ySpeed = Math.max(-20, Math.min(ySpeed, 20));
+    //xSpeed = Math.max(-20, Math.min(xSpeed, 20));
+    //ySpeed = Math.max(-20, Math.min(ySpeed, 20));
 }
 
 }
