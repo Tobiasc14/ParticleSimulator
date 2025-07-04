@@ -17,7 +17,7 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 10;
+    public int numParticles = 13;
     public double tempDistance;
     public double G = 1; // gravitational constant
     double drag = .9; //.75 is a good value 
@@ -128,9 +128,10 @@ public class GameEngine extends Canvas implements Runnable{
 
             double dx = entity2.x - entity.x;
             double dy = entity2.y - entity.y;
-            double distanceSquared = dx * dx + dy * dy;
-
-            if (entity.ellipse.intersects(entity2.ellipse.getBounds())) {
+            double distanceSquared = (dx * dx) + (dy * dy);
+            double approxRadius1 = (entity.sizeX/2+entity.sizeY/2)/2.0;
+            double approxRadius2 = (entity2.sizeX/2+entity2.sizeY/2)/2.0;
+            if (Math.sqrt(distanceSquared)<(approxRadius1+approxRadius2)) {
                 if (entity2.kineticEnergy + entity.kineticEnergy > entity.gravBindingEnergy) {
                     if (entity.mass < 1) continue;
 

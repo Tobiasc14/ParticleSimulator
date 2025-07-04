@@ -38,7 +38,7 @@ public class Particle extends Entity{
         ySpeed = Math.random()*speed-speed/2.0;
         kineticEnergy = 0.5*mass*speed*speed;
         gravBindingEnergy= 0.6*gameEngine.G*mass*mass/sizeX/2;        
-        setBounds();
+        //setBounds();
         clamp();
         name = "particle";      
        
