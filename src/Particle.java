@@ -25,8 +25,8 @@ public class Particle extends Entity{
 
 
     public void setDefaultValues(){
-        speed = 1;        
-        mass = Math.random()*3+1;
+        speed = 3;        
+        mass = Math.random()*43+1;
         sizeX = (int)Math.sqrt(mass);
         sizeY = (int)Math.sqrt(mass);        
         acceleration = 0;
@@ -46,8 +46,9 @@ public class Particle extends Entity{
     }
     public void draw(Graphics2D g2){
         g2.setColor(Color.lightGray);
-        g2.fill(hitbox);        
-        g2.draw(hitbox);
+        //g2.fill(hitbox);        
+        g2.drawOval((int)x-(sizeX/2), (int)y-(sizeY/2), sizeX, sizeY);
+        g2.fillOval((int)x-(sizeX/2), (int)y-(sizeY/2), sizeX, sizeY);
         
     }
     public void updateState(){ 
@@ -56,7 +57,7 @@ public class Particle extends Entity{
         kineticEnergy = 0.5 * mass * (xSpeed * xSpeed + ySpeed * ySpeed);
         gravBindingEnergy = 0.6 * gameEngine.G * mass * mass / sizeX / 2;
         clamp();
-        hitbox.setBounds((int)x, (int)y, sizeX, sizeY);
+        //ellipse.setBounds((int)x, (int)y, sizeX, sizeY);
         
     }
 

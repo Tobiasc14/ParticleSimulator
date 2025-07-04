@@ -1,5 +1,5 @@
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 public class Entity {
@@ -10,8 +10,10 @@ public class Entity {
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public BufferedImage upLeft1, upLeft2, downRight1, downRight2, downLeft1, downLeft2, upRight1, upRight2;
     public String direction, name;
-    public int entityListLoc;    
-    public Rectangle hitbox = new Rectangle((int) x, (int) y, sizeX, sizeY);
+    public int entityListLoc; 
+    public Ellipse2D ellipse = new Ellipse2D.Double(x, y, sizeX, sizeY);  
+    //public Shape  = new Rectangle((int) x, (int) y, sizeX, sizeY);
+    
     public boolean collision = true;
     public boolean isPaused = false;
     public boolean hittingSomething = false;
@@ -46,7 +48,7 @@ public class Entity {
     }
 
     public void setBounds(){
-        hitbox.setBounds((int)x,(int) y, sizeX, sizeY);
+        ellipse.intersects((int)x,(int) y, sizeX, sizeY);
     }
     
 

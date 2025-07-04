@@ -17,10 +17,10 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 750;
+    public int numParticles = 10;
     public double tempDistance;
     public double G = 1; // gravitational constant
-    double drag = .95; //.75 is a good value 
+    double drag = .9; //.75 is a good value 
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
@@ -35,14 +35,30 @@ public class GameEngine extends Canvas implements Runnable{
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.darkGray);
         this.setFocusable(true);
-        this.addKeyListener(keyHandler);        
+        this.addKeyListener(keyHandler);      
+        
+        Particle centralStar = new Particle(this);
+        centralStar.mass = 10000;
+        centralStar.speed=0;
+        centralStar.xSpeed = 0;
+        centralStar.ySpeed = 0;
+        centralStar.sizeX = (int)Math.sqrt(centralStar.mass);
+        centralStar.sizeY = (int)Math.sqrt(centralStar.mass);
+        centralStar.x=screenWidth/2-Math.sqrt(centralStar.mass)/2;
+        centralStar.y=screenHeight/2-Math.sqrt(centralStar.mass)/2;
+        
         
         for (int i = 0; i < numParticles; i++) {
-            entityList.add(new Particle(this));
+            Particle p = new Particle(this);
+            
+            //p.x = screenWidth+Math.random()*30;
+            entityList.add(p);
             
         }
+        entityList.add(centralStar);
         
-        }
+        
+    }
 
       
     
@@ -114,7 +130,7 @@ public class GameEngine extends Canvas implements Runnable{
             double dy = entity2.y - entity.y;
             double distanceSquared = dx * dx + dy * dy;
 
-            if (entity.hitbox.intersects(entity2.hitbox)) {
+            if (entity.ellipse.intersects(entity2.ellipse.getBounds())) {
                 if (entity2.kineticEnergy + entity.kineticEnergy > entity.gravBindingEnergy) {
                     if (entity.mass < 1) continue;
 

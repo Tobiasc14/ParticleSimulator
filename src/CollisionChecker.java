@@ -20,7 +20,7 @@ public class CollisionChecker {
                 if(gameEngine.entityList.get(i) != null){
                     if (entity.equals(gameEngine.entityList.get(i))){    
                     }
-                    else if(entity.hitbox.intersects(gameEngine.entityList.get(i).hitbox)){
+                    else if(entity.ellipse.intersects(gameEngine.entityList.get(i).ellipse.getBounds())){
                         entity.hittingSomething = true;     
                         //System.out.println("Collision Detected! " + gameEngine.entityList[i].name + " is hitting " + entity.name);           
                     }
