@@ -17,10 +17,10 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 13;
+    public int numParticles = 520;
     public double tempDistance;
-    public double G = 1; // gravitational constant
-    double drag = .9; //.75 is a good value 
+    public double G = .25; // gravitational constant
+    double drag = .29; //.75 is a good value 
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
@@ -38,7 +38,7 @@ public class GameEngine extends Canvas implements Runnable{
         this.addKeyListener(keyHandler);      
         
         Particle centralStar = new Particle(this);
-        centralStar.mass = 10000;
+        centralStar.mass = 5000;
         centralStar.speed=0;
         centralStar.xSpeed = 0;
         centralStar.ySpeed = 0;
@@ -55,7 +55,7 @@ public class GameEngine extends Canvas implements Runnable{
             entityList.add(p);
             
         }
-        entityList.add(centralStar);
+        //entityList.add(centralStar);
         
         
     }
@@ -136,7 +136,7 @@ public class GameEngine extends Canvas implements Runnable{
                     if (entity.mass < 1) continue;
 
                     double childMass = entity.mass / 2.0;
-                    if (childMass < 1) continue;
+                    if (childMass < 2) continue;
 
                     for (int k = 0; k < 2; k++) {
                         Particle fragment = new Particle(this);
