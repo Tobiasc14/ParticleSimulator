@@ -50,12 +50,13 @@ public class GameEngine extends Canvas implements Runnable{
         
         for (int i = 0; i < numParticles; i++) {
             Particle p = new Particle(this);
-            
+            RepelingParticle rp = new RepelingParticle(this);
             //p.x = screenWidth+Math.random()*30;
             entityList.add(p);
+            entityList.add(rp);
             
         }
-        //entityList.add(centralStar);
+        entityList.add(centralStar);
         
         
     }
