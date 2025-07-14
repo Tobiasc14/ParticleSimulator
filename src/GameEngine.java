@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class GameEngine extends Canvas implements Runnable{
 
     final int originalTileSize = 16;
@@ -21,8 +22,9 @@ public class GameEngine extends Canvas implements Runnable{
     public double tempDistance;
     public double G = .95; // gravitational constant
     double drag = .99; //.75 is a good value 
-
+    MouseHandler mouseHandler = new MouseHandler();
     KeyHandler keyHandler = new KeyHandler();
+    
     Thread gameThread;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
 
@@ -35,7 +37,9 @@ public class GameEngine extends Canvas implements Runnable{
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.darkGray);
         this.setFocusable(true);
-        this.addKeyListener(keyHandler);      
+        this.addKeyListener(keyHandler);
+        this.addMouseListener(mouseHandler);
+        Hud hud = new Hud(this);      
         
         Particle centralStar = new Particle(this);
         centralStar.mass = 15000;
@@ -193,6 +197,7 @@ public class GameEngine extends Canvas implements Runnable{
     entityList.removeAll(toRemove);
     entityList.addAll(toAdd);
     //System.out.println("Added addList to entityList");
+    Hud.updateState();
 }
     public double min(double a, double b){
         if(a < b){
@@ -222,6 +227,7 @@ public class GameEngine extends Canvas implements Runnable{
                 for (Entity entity : entityList) {
                     if (entity != null) entity.draw(g2);
                 }
+                Hud.draw(g2);
 
                 g2.dispose();
             } while (bs.contentsRestored());
