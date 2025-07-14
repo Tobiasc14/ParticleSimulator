@@ -25,8 +25,8 @@ public class Particle extends Entity{
 
 
     public void setDefaultValues(){
-        speed = (int)(Math.random()*2);        
-        mass = Math.random()*13+2;
+        speed = (int)(Math.random()*21);        
+        mass = Math.random()*25+2;
         sizeX = (int)Math.sqrt(mass);
         sizeY = (int)Math.sqrt(mass);        
         acceleration = 0;
@@ -36,7 +36,7 @@ public class Particle extends Entity{
         angle = Math.random()*2*Math.PI;
         xSpeed = Math.random()*speed-speed/2.0;
         ySpeed = Math.random()*speed-speed/2.0;
-        kineticEnergy = 0.5*mass*speed*speed;
+        absKineticEnergy = 0.5*mass*speed*speed;
         gravBindingEnergy= 0.6*gameEngine.G*mass*mass/sizeX/2;        
         //setBounds();
         clamp();
@@ -54,7 +54,7 @@ public class Particle extends Entity{
     public void updateState(){ 
         y=(y+ySpeed);
         x=(x+xSpeed);
-        kineticEnergy = 0.5 * mass * (xSpeed * xSpeed + ySpeed * ySpeed);
+        //kineticEnergy = 0.5 * mass * (xSpeed * xSpeed + ySpeed * ySpeed);
         gravBindingEnergy = 0.6 * gameEngine.G * mass * mass / sizeX / 2;
         clamp();
         //ellipse.setBounds((int)x, (int)y, sizeX, sizeY);

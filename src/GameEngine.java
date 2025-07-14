@@ -17,10 +17,10 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    public int numParticles = 520;
+    public int numParticles = 140;
     public double tempDistance;
-    public double G = .25; // gravitational constant
-    double drag = .29; //.75 is a good value 
+    public double G = .95; // gravitational constant
+    double drag = .99; //.75 is a good value 
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
@@ -38,10 +38,10 @@ public class GameEngine extends Canvas implements Runnable{
         this.addKeyListener(keyHandler);      
         
         Particle centralStar = new Particle(this);
-        centralStar.mass = 5000;
+        centralStar.mass = 15000;
         centralStar.speed=0;
-        centralStar.xSpeed = 0;
-        centralStar.ySpeed = 0;
+        centralStar.xSpeed = Math.random()*centralStar.speed;
+        centralStar.ySpeed = Math.random()*centralStar.speed;
         centralStar.sizeX = (int)Math.sqrt(centralStar.mass);
         centralStar.sizeY = (int)Math.sqrt(centralStar.mass);
         centralStar.x=screenWidth/2-Math.sqrt(centralStar.mass)/2;
@@ -53,10 +53,10 @@ public class GameEngine extends Canvas implements Runnable{
             RepelingParticle rp = new RepelingParticle(this);
             //p.x = screenWidth+Math.random()*30;
             entityList.add(p);
-            entityList.add(rp);
+            //entityList.add(rp);
             
         }
-        entityList.add(centralStar);
+        //entityList.add(centralStar);
         
         
     }
@@ -132,8 +132,11 @@ public class GameEngine extends Canvas implements Runnable{
             double distanceSquared = (dx * dx) + (dy * dy);
             double approxRadius1 = (entity.sizeX/2+entity.sizeY/2)/2.0;
             double approxRadius2 = (entity2.sizeX/2+entity2.sizeY/2)/2.0;
+            double relVelocityX = entity.xSpeed-entity2.xSpeed;
+            double relVelocityY = entity.ySpeed-entity2.ySpeed;
+            double relSpeed = (relVelocityX*relVelocityX)+(relVelocityY*relVelocityY);
             if (Math.sqrt(distanceSquared)<(approxRadius1+approxRadius2)) {
-                if (entity2.kineticEnergy + entity.kineticEnergy > entity.gravBindingEnergy) {
+                if (0.5*(entity.mass * entity2.mass) / (entity.mass + entity2.mass)*relSpeed > entity.gravBindingEnergy) {
                     if (entity.mass < 1) continue;
 
                     double childMass = entity.mass / 2.0;

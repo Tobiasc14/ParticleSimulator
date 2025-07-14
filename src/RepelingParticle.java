@@ -20,7 +20,7 @@ public class RepelingParticle extends Particle{
     public void updateState(){
         y=(y-ySpeed);
         x=(x-xSpeed);
-        kineticEnergy = 0.5 * mass * (xSpeed * xSpeed + ySpeed * ySpeed);
+        //kineticEnergy = 0.5 * mass * (xSpeed * xSpeed + ySpeed * ySpeed);
         gravBindingEnergy = 0.6 * gameEngine.G * mass * mass / sizeX / 2;
         clamp();
     }
