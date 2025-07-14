@@ -1,39 +1,44 @@
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 public class MouseHandler implements java.awt.event.MouseListener {
 
+    public Point mouseCoords;
 
+    boolean mouseClicked;
     
 
     @Override
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
-        e.getPoint();
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+        System.out.println("Clicked mouse");
+        mouseClicked = true;
+        mouseCoords = e.getPoint();
+                
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+        // Triggered when mouse enters game window
+        //throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+        // Triggers when mouse leaves game window
+        //throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+        // Triggers if mouse pressed and held?
+        //throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+        // Triggers if mouse released after being held?
+        //throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
     }
 
 
