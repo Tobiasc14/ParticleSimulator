@@ -41,8 +41,14 @@ public class GameEngine extends Canvas implements Runnable{
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
         this.addMouseListener(mouseHandler);
-        hud = new Hud(this);      
+        hud = new Hud(this);
+        initializeSim();      
         
+        
+        
+        
+    }
+    public void initializeSim(){
         Particle centralStar = new Particle(this);
         centralStar.mass = 15000;
         centralStar.speed=0;
@@ -63,8 +69,7 @@ public class GameEngine extends Canvas implements Runnable{
             
         }
         //entityList.add(centralStar);
-        
-        
+
     }
 
       
@@ -112,11 +117,7 @@ public class GameEngine extends Canvas implements Runnable{
         }
 
         // Report FPS every second
-        if (System.currentTimeMillis() - timer >= 1000) {
-            System.out.println("FPS: " + drawCount);
-            drawCount = 0;
-            timer += 1000;
-        }
+        
     }
     }
 
@@ -124,7 +125,7 @@ public class GameEngine extends Canvas implements Runnable{
     public void updateState() {
         if(gameState == 1){
             List<Entity> toAdd = new ArrayList<>();
-        List<Entity> toRemove = new ArrayList<>();
+            List<Entity> toRemove = new ArrayList<>();
 
         for (int i = 0; i < entityList.size(); i++) {
             Entity entity = entityList.get(i);
@@ -214,9 +215,13 @@ public class GameEngine extends Canvas implements Runnable{
             else{
                 gameState = 0;
             }
+        } 
+        else if(hud.restartButton.contains(mouseHandler.mouseCoords)){
+            entityList.removeAll(entityList);
+            initializeSim();
         }
-            mouseHandler.mouseClicked = false;
-        
+
+        mouseHandler.mouseClicked = false;
 
     }
     
