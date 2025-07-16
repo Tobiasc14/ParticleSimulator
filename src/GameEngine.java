@@ -12,6 +12,7 @@ public class GameEngine extends Canvas implements Runnable{
 
     final int originalTileSize = 16;
     final int scale = 1;
+    final int maxParticles = 750;
     public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 90;
     public final int maxScreenRow = 67;
@@ -19,10 +20,10 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenHeight = tileSize * maxScreenRow;
     public Hud hud;
     int gameState = 1;
-    public int numParticles = 140;
+    public int numParticles = 200;
     public double tempDistance;
-    public double G = .95; // gravitational constant
-    double drag = .99; //.75 is a good value 
+    public double G = 1; // gravitational constant
+    double drag = .5; //.75 is a good value 
     MouseHandler mouseHandler = new MouseHandler();
     
     KeyHandler keyHandler = new KeyHandler();
@@ -41,6 +42,7 @@ public class GameEngine extends Canvas implements Runnable{
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
         this.addMouseListener(mouseHandler);
+        this.addMouseMotionListener(mouseHandler);
         hud = new Hud(this);
         initializeSim();      
         
@@ -223,6 +225,27 @@ public class GameEngine extends Canvas implements Runnable{
 
         mouseHandler.mouseClicked = false;
 
+    }
+    if(mouseHandler.mousePressed){
+        if (hud.sliderBody.contains(mouseHandler.mouseCoords)){
+            mouseHandler.mouseDragged = true;
+            
+        }
+        if (mouseHandler.mouseDragged){
+            if(mouseHandler.mouseCoords.x-5 >= 190 && mouseHandler.mouseCoords.x < 290){
+                hud.sliderBody.x = mouseHandler.mouseCoords.x-5;
+
+            }
+            else if(mouseHandler.mouseCoords.x-5 < 190 ){
+                hud.sliderBody.x = 190;
+            }
+            else if(mouseHandler.mouseCoords.x-5 >290){
+                hud.sliderBody.x = 290;
+            }
+            numParticles = (int)(((hud.sliderBody.x-190)/100.0)*maxParticles);
+            System.out.println(numParticles);
+        }
+        
     }
     
     //System.out.println("Added addList to entityList");
