@@ -23,6 +23,7 @@ public class GameEngine extends Canvas implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
     public Hud hud;
+    Particle centralStar;
     int gameState = 1;
     int mouseFlag = 0;
     public int numParticles = 30;
@@ -58,7 +59,7 @@ public class GameEngine extends Canvas implements Runnable{
     }
     public void initializeSim(){
         
-        Particle centralStar = new Particle(this);
+        centralStar = new Particle(this);
         centralStar.mass = 15000;
         centralStar.speed=0;
         centralStar.xSpeed = Math.random()*centralStar.speed;
@@ -67,6 +68,7 @@ public class GameEngine extends Canvas implements Runnable{
         centralStar.sizeY = (int)Math.sqrt(centralStar.mass);
         centralStar.x=screenWidth/2-Math.sqrt(centralStar.mass)/2;
         centralStar.y=screenHeight/2-Math.sqrt(centralStar.mass)/2;
+        centralStar.name = "centralStar";
         
         
         for (int i = 0; i < numParticles; i++) {
@@ -132,10 +134,10 @@ public class GameEngine extends Canvas implements Runnable{
 
     
     public void updateState() {
+        List<Entity> toAdd = new ArrayList<>();
+        List<Entity> toRemove = new ArrayList<>();
         if(gameState == 1){
-            List<Entity> toAdd = new ArrayList<>();
-            List<Entity> toRemove = new ArrayList<>();
-
+            
         for (int i = 0; i < entityList.size(); i++) {
             Entity entity = entityList.get(i);
             if (entity == null || toRemove.contains(entity)) continue;
@@ -232,6 +234,21 @@ public class GameEngine extends Canvas implements Runnable{
             entityList.removeAll(entityList);
             initializeSim();
         }
+        else if(hud.centralStar.contains(mouseHandler.mouseCoords)){
+                      
+            if(!hud.hasCentralStar){
+                entityList.add(centralStar);
+            }
+            else{
+                for(int i = 0; i < entityList.size(); i++){
+                    if(entityList.get(i).name.equals("centralStar")){
+                        entityList.remove(i);
+                    }
+                }
+            }
+            hud.hasCentralStar = !(hud.hasCentralStar);  
+
+        }
 
         mouseHandler.mouseClicked = false;
 
@@ -326,7 +343,7 @@ public class GameEngine extends Canvas implements Runnable{
                 }
                 drag = (1-((hud.sliderBody5.x-hud.sliderFrame5.x)/100.0));
                 
-                System.out.println(drag);
+                //System.out.println(drag);
             }
         }
         if (mouseHandler.mouseReleased){
