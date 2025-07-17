@@ -6,17 +6,16 @@ public class MouseHandler implements java.awt.event.MouseListener, MouseMotionLi
 
     public Point mouseCoords;
 
-    boolean mouseClicked;
-    boolean mousePressed;
-    boolean mouseDragged;
+    boolean mouseClicked, mouseReleased,mousePressed,mouseDragged;
     
 
     @Override
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
         //System.out.println("Clicked mouse");
-        mouseClicked = true;
         mouseCoords = e.getPoint();
+        mouseClicked = true;
+        
                 
     }
 
@@ -36,8 +35,9 @@ public class MouseHandler implements java.awt.event.MouseListener, MouseMotionLi
     public void mousePressed(MouseEvent e) {
         // Triggers if mouse pressed and held?
         //throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
-        mousePressed = true;
         mouseCoords = e.getPoint();
+        mousePressed = true;
+        
         //System.out.println("Pressed mouse");
     }
 
@@ -45,9 +45,11 @@ public class MouseHandler implements java.awt.event.MouseListener, MouseMotionLi
     public void mouseReleased(MouseEvent e) {
         // Triggers if mouse released after being held?
         //throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+        mouseCoords = e.getPoint();
         mousePressed = false;
         mouseDragged = false;
-        mouseCoords = e.getPoint();
+        mouseReleased = true;
+        
         //System.out.println("Released mouse");
     }
 
@@ -55,7 +57,7 @@ public class MouseHandler implements java.awt.event.MouseListener, MouseMotionLi
     public void mouseDragged(MouseEvent e) {
         // Fires whenever mouse is clicked AND moved
         //throw new UnsupportedOperationException("Unimplemented method 'mouseDragged'");
-        
+        mouseDragged = true;
         mouseCoords = e.getPoint();
         //System.out.println("Dragged mouse");
     }
