@@ -14,6 +14,7 @@ public class GameEngine extends Canvas implements Runnable{
     final int scale = 1;
     final int maxParticles = 750;
     final double maxSpeed = 20;
+    final double maxG = 1.5;
     public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 90;
     public final int maxScreenRow = 67;
@@ -24,7 +25,7 @@ public class GameEngine extends Canvas implements Runnable{
     int mouseFlag = 0;
     public int numParticles = 30;
     public double tempDistance, averageSpeed;
-    public double G = 1; // gravitational constant
+    public double G = .2; // gravitational constant
     double drag = .5; //.75 is a good value 
     MouseHandler mouseHandler = new MouseHandler();
     
@@ -229,7 +230,7 @@ public class GameEngine extends Canvas implements Runnable{
 
     }
     if(mouseHandler.mousePressed){
-        System.out.println("Mouse was Pressed");
+        //System.out.println("Mouse was Pressed");
         if (hud.sliderBody.contains(mouseHandler.mouseCoords)){
             mouseFlag = 1;
             
@@ -237,8 +238,11 @@ public class GameEngine extends Canvas implements Runnable{
         else if (hud.sliderBody2.contains(mouseHandler.mouseCoords)){
             mouseFlag = 2;
         }
+        else if (hud.sliderBody3.contains(mouseHandler.mouseCoords)){
+            mouseFlag = 3;
+        }
         if(mouseHandler.mouseDragged){
-            System.out.println("Mouse was Dragged");
+            //System.out.println("Mouse was Dragged");
             if (mouseFlag==1){
                 if(mouseHandler.mouseCoords.x-5 >= hud.sliderFrame.x && mouseHandler.mouseCoords.x < (hud.sliderFrame.x+hud.sliderWidth-5)){
                     hud.sliderBody.x = mouseHandler.mouseCoords.x-5;
@@ -265,6 +269,20 @@ public class GameEngine extends Canvas implements Runnable{
                     hud.sliderBody2.x = hud.sliderFrame2.x+hud.sliderWidth-10;
                 }
                 averageSpeed = (((hud.sliderBody2.x-hud.sliderFrame2.x)/100.0)*maxSpeed);
+                //System.out.println(numParticles);
+            }
+            else if (mouseFlag==3){
+                if(mouseHandler.mouseCoords.x-5 >= hud.sliderFrame3.x && mouseHandler.mouseCoords.x < (hud.sliderFrame3.x+hud.sliderWidth-5)){
+                    hud.sliderBody3.x = mouseHandler.mouseCoords.x-5;
+
+                }
+                else if(mouseHandler.mouseCoords.x-5 < hud.sliderBody3.x ){
+                    hud.sliderBody3.x = hud.sliderFrame3.x;
+                }
+                else if(mouseHandler.mouseCoords.x-5 >=(hud.sliderFrame3.x+hud.sliderWidth-5)){
+                    hud.sliderBody3.x = hud.sliderFrame3.x+hud.sliderWidth-10;
+                }
+                G = (((hud.sliderBody3.x-hud.sliderFrame3.x)/100.0)*maxG);
                 //System.out.println(numParticles);
             }
         }

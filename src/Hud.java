@@ -9,7 +9,7 @@ public class Hud {
 
 
 public GameEngine gameEngine;
-public Rectangle sliderFrame, restartButton, pauseButton, numParticles, massRange, speedRange, sliderBody, sliderFrame2, sliderBody2;
+public Rectangle sliderFrame, restartButton, pauseButton, numParticles, massRange, speedRange, sliderBody, sliderFrame2, sliderBody2,sliderFrame3, sliderBody3;
 public ArrayList<Rectangle> hudButtons; 
 public ArrayList<String> hudButtonText; 
 public int sliderWidth, sliderHeight;
@@ -27,14 +27,18 @@ public int sliderWidth, sliderHeight;
         sliderBody = new Rectangle(190+5, 8, 10, 20);
         sliderFrame2 = new Rectangle(300, 10, sliderWidth, sliderHeight);
         sliderBody2 = new Rectangle(300+5, 8, 10, 20);
+        sliderFrame3 = new Rectangle(410, 10, sliderWidth, sliderHeight);
+        sliderBody3 = new Rectangle(410+5, 8, 10, 20);
         hudButtons.add(pauseButton);
         hudButtons.add(restartButton);
         hudButtons.add(sliderFrame);
         hudButtons.add(sliderFrame2);
+        hudButtons.add(sliderFrame3);
         hudButtonText.add("Start/Stop");
         hudButtonText.add("Restart");
         hudButtonText.add("Starting Particles");
         hudButtonText.add("Average Speed");
+        hudButtonText.add("Strength of G");
     }
 
     public void updateState(){
@@ -52,6 +56,7 @@ public int sliderWidth, sliderHeight;
         g.setColor(Color.GRAY);
         g.fillRect(sliderBody.x, sliderBody.y, sliderBody.width, sliderBody.height);
         g.fillRect(sliderBody2.x, sliderBody2.y, sliderBody2.width, sliderBody2.height);
+        g.fillRect(sliderBody3.x, sliderBody3.y, sliderBody3.width, sliderBody3.height);
 
         
     }
