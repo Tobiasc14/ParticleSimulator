@@ -9,7 +9,7 @@ public class Hud {
 
 
 public GameEngine gameEngine;
-public Rectangle sliderFrame, restartButton, pauseButton, numParticles, massRange, sliderBody, sliderFrame2, sliderBody2,sliderFrame3, sliderBody3,sliderFrame4, sliderBody4;
+public Rectangle sliderFrame, restartButton, pauseButton, numParticles, sliderBody, sliderFrame2, sliderBody2,sliderFrame3, sliderBody3,sliderFrame4, sliderBody4;
 public ArrayList<Rectangle> hudButtons; 
 public ArrayList<String> hudButtonText; 
 public int sliderWidth, sliderHeight;

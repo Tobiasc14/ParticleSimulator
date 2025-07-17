@@ -13,8 +13,10 @@ import java.awt.Graphics2D;
 public class Particle extends Entity{
 
     GameEngine gameEngine;
-    
-    
+
+    int red = (int)(256*Math.random());
+    int green = (int)(256*Math.random());
+    int blue = (int)(256*Math.random());
     
 
     public Particle(GameEngine gameEngine){
@@ -45,7 +47,7 @@ public class Particle extends Entity{
         
     }
     public void draw(Graphics2D g2){
-        g2.setColor(Color.lightGray);
+        g2.setColor(new Color(red, green, blue));
         //g2.fill(hitbox);        
         g2.drawOval((int)x-(sizeX/2), (int)y-(sizeY/2), sizeX, sizeY);
         g2.fillOval((int)x-(sizeX/2), (int)y-(sizeY/2), sizeX, sizeY);

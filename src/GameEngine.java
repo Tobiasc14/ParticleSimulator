@@ -19,7 +19,7 @@ public class GameEngine extends Canvas implements Runnable{
     final double minMass = 2;
     public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 90;
-    public final int maxScreenRow = 120;
+    public final int maxScreenRow = 67;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
     public Hud hud;
