@@ -251,6 +251,9 @@ public class GameEngine extends Canvas implements Runnable{
         else if (hud.sliderBody4.contains(mouseHandler.mouseCoords)){
             mouseFlag = 4;
         }
+        else if (hud.sliderBody5.contains(mouseHandler.mouseCoords)){
+            mouseFlag = 5;
+        }
         if(mouseHandler.mouseDragged){
             //System.out.println("Mouse was Dragged");
             if (mouseFlag==1){
@@ -309,6 +312,21 @@ public class GameEngine extends Canvas implements Runnable{
                 G = (((hud.sliderBody4.x-hud.sliderFrame4.x)/100.0)*maxG);
                 
                 //System.out.println(numParticles);
+            }
+            else if (mouseFlag==5){
+                if(mouseHandler.mouseCoords.x-5 >= hud.sliderFrame5.x && mouseHandler.mouseCoords.x < (hud.sliderFrame5.x+hud.sliderWidth-5)){
+                    hud.sliderBody5.x = mouseHandler.mouseCoords.x-5;
+
+                }
+                else if(mouseHandler.mouseCoords.x-5 < hud.sliderBody5.x ){
+                    hud.sliderBody5.x = hud.sliderFrame5.x;
+                }
+                else if(mouseHandler.mouseCoords.x-5 >=(hud.sliderFrame5.x+hud.sliderWidth-5)){
+                    hud.sliderBody5.x = hud.sliderFrame5.x+hud.sliderWidth-10;
+                }
+                drag = (1-((hud.sliderBody5.x-hud.sliderFrame5.x)/100.0));
+                
+                System.out.println(drag);
             }
         }
         if (mouseHandler.mouseReleased){

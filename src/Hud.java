@@ -9,7 +9,7 @@ public class Hud {
 
 
 public GameEngine gameEngine;
-public Rectangle sliderFrame, restartButton, pauseButton, numParticles, sliderBody, sliderFrame2, sliderBody2,sliderFrame3, sliderBody3,sliderFrame4, sliderBody4;
+public Rectangle sliderFrame, restartButton, pauseButton, numParticles, sliderBody, sliderFrame2, sliderBody2,sliderFrame3, sliderBody3,sliderFrame4, sliderBody4,sliderFrame5, sliderBody5;
 public ArrayList<Rectangle> hudButtons; 
 public ArrayList<String> hudButtonText; 
 public int sliderWidth, sliderHeight;
@@ -31,18 +31,22 @@ public int sliderWidth, sliderHeight;
         sliderBody3 = new Rectangle(410+5, 8, 10, 20);
         sliderFrame4 = new Rectangle(520, 10, sliderWidth, sliderHeight);
         sliderBody4 = new Rectangle(520+5, 8, 10, 20);
+        sliderFrame5 = new Rectangle(630, 10, sliderWidth, sliderHeight);
+        sliderBody5 = new Rectangle(630+5, 8, 10, 20);
         hudButtons.add(pauseButton);
         hudButtons.add(restartButton);
         hudButtons.add(sliderFrame);
         hudButtons.add(sliderFrame2);
         hudButtons.add(sliderFrame3);
         hudButtons.add(sliderFrame4);
+        hudButtons.add(sliderFrame5);
         hudButtonText.add("Start/Stop");
         hudButtonText.add("Restart");
         hudButtonText.add("Starting Particles");
         hudButtonText.add("Starting Speed");
         hudButtonText.add("Starting Size");
         hudButtonText.add("Strength of G");
+        hudButtonText.add("Drag coefficient");
         
     }
 
@@ -63,6 +67,7 @@ public int sliderWidth, sliderHeight;
         g.fillRect(sliderBody2.x, sliderBody2.y, sliderBody2.width, sliderBody2.height);
         g.fillRect(sliderBody3.x, sliderBody3.y, sliderBody3.width, sliderBody3.height);
         g.fillRect(sliderBody4.x, sliderBody4.y, sliderBody4.width, sliderBody4.height);
+        g.fillRect(sliderBody5.x, sliderBody5.y, sliderBody5.width, sliderBody5.height);
         
         
         
