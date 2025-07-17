@@ -14,7 +14,9 @@ public class GameEngine extends Canvas implements Runnable{
     final int scale = 1;
     final int maxParticles = 750;
     final double maxSpeed = 20;
-    final double maxG = 1.5;
+    final double maxG = 2.5;
+    final double maxMass = 225;
+    final double minMass = 2;
     public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 90;
     public final int maxScreenRow = 67;
@@ -24,9 +26,10 @@ public class GameEngine extends Canvas implements Runnable{
     int gameState = 1;
     int mouseFlag = 0;
     public int numParticles = 30;
+    public double averageMass = 25;
     public double tempDistance, averageSpeed;
-    public double G = .2; // gravitational constant
-    double drag = .5; //.75 is a good value 
+    public double G = .18; // gravitational constant
+    double drag = .75; //.75 is a good value 
     MouseHandler mouseHandler = new MouseHandler();
     
     KeyHandler keyHandler = new KeyHandler();
@@ -241,6 +244,9 @@ public class GameEngine extends Canvas implements Runnable{
         else if (hud.sliderBody3.contains(mouseHandler.mouseCoords)){
             mouseFlag = 3;
         }
+        else if (hud.sliderBody4.contains(mouseHandler.mouseCoords)){
+            mouseFlag = 4;
+        }
         if(mouseHandler.mouseDragged){
             //System.out.println("Mouse was Dragged");
             if (mouseFlag==1){
@@ -282,7 +288,22 @@ public class GameEngine extends Canvas implements Runnable{
                 else if(mouseHandler.mouseCoords.x-5 >=(hud.sliderFrame3.x+hud.sliderWidth-5)){
                     hud.sliderBody3.x = hud.sliderFrame3.x+hud.sliderWidth-10;
                 }
-                G = (((hud.sliderBody3.x-hud.sliderFrame3.x)/100.0)*maxG);
+                averageMass= (((hud.sliderBody3.x-hud.sliderFrame3.x)/100.0)*maxMass);
+                //System.out.println(numParticles);
+            }
+            else if (mouseFlag==4){
+                if(mouseHandler.mouseCoords.x-5 >= hud.sliderFrame4.x && mouseHandler.mouseCoords.x < (hud.sliderFrame4.x+hud.sliderWidth-5)){
+                    hud.sliderBody4.x = mouseHandler.mouseCoords.x-5;
+
+                }
+                else if(mouseHandler.mouseCoords.x-5 < hud.sliderBody4.x ){
+                    hud.sliderBody4.x = hud.sliderFrame4.x;
+                }
+                else if(mouseHandler.mouseCoords.x-5 >=(hud.sliderFrame4.x+hud.sliderWidth-5)){
+                    hud.sliderBody4.x = hud.sliderFrame4.x+hud.sliderWidth-10;
+                }
+                G = (((hud.sliderBody4.x-hud.sliderFrame4.x)/100.0)*maxG);
+                
                 //System.out.println(numParticles);
             }
         }
