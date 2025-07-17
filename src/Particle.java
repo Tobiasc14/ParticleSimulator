@@ -14,9 +14,7 @@ public class Particle extends Entity{
 
     GameEngine gameEngine;
 
-    int red = (int)(256*Math.random());
-    int green = (int)(256*Math.random());
-    int blue = (int)(256*Math.random());
+    
     
 
     public Particle(GameEngine gameEngine){
@@ -39,7 +37,10 @@ public class Particle extends Entity{
         xSpeed = Math.random()*speed-speed/2.0;
         ySpeed = Math.random()*speed-speed/2.0;
         absKineticEnergy = 0.5*mass*speed*speed;
-        gravBindingEnergy= 0.6*gameEngine.G*mass*mass/sizeX/2;        
+        gravBindingEnergy= 0.6*gameEngine.G*mass*mass/sizeX/2;   
+        red = (int)(256*Math.random());
+        green = (int)(256*Math.random());
+        blue = (int)(256*Math.random());     
         //setBounds();
         clamp();
         name = "particle";      

@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
 
-    public int speed, defaultSpeed, sizeX, sizeY;
+    public int speed, defaultSpeed, sizeX, sizeY, red, green, blue;
     public double angle, acceleration, xAcceleration, yAcceleration, mass, xSpeed, ySpeed, x, y, absKineticEnergy, gravBindingEnergy, relKineticEnergy;
 
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;

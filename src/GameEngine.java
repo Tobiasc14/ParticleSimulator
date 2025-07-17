@@ -57,8 +57,7 @@ public class GameEngine extends Canvas implements Runnable{
         
     }
     public void initializeSim(){
-        averageSpeed = 2;
-
+        
         Particle centralStar = new Particle(this);
         centralStar.mass = 15000;
         centralStar.speed=0;
@@ -184,7 +183,10 @@ public class GameEngine extends Canvas implements Runnable{
                         entity.xSpeed = (entity.xSpeed * entity.mass + entity2.xSpeed * entity2.mass) / (entity.mass + entity2.mass);
                         entity.ySpeed = (entity.ySpeed * entity.mass + entity2.ySpeed * entity2.mass) / (entity.mass + entity2.mass);
                         entity.x = (entity.x * entity.mass + entity2.x * entity2.mass) / (entity.mass + entity2.mass);
-                        entity.y = (entity.y * entity.mass + entity2.y * entity2.mass) / (entity.mass + entity2.mass);
+                        entity.y = (entity.y * entity.mass + entity2.y * entity2.mass) / (entity.mass + entity2.mass);                        
+                        entity.red = (int)((entity.red*entity.mass+entity2.red*entity2.mass)/(entity.mass + entity2.mass));
+                        entity.green = (int)((entity.green*entity.mass+entity2.green*entity2.mass)/(entity.mass + entity2.mass));
+                        entity.blue = (int)((entity.blue*entity.mass+entity2.blue*entity2.mass)/(entity.mass + entity2.mass));
                         entity.mass = entity.mass + entity2.mass;
                         entity.sizeX = (int)Math.sqrt(entity.mass);
                         entity.sizeY = (int)Math.sqrt(entity.mass);
