@@ -10,11 +10,11 @@ public class Hud {
 
 public GameEngine gameEngine;
 public Rectangle sliderFrame, restartButton, pauseButton, numParticles, sliderBody, sliderFrame2, sliderBody2,
-                sliderFrame3, sliderBody3,sliderFrame4, sliderBody4,sliderFrame5, sliderBody5,centralStar;
+                sliderFrame3, sliderBody3,sliderFrame4, sliderBody4,sliderFrame5, sliderBody5,randomSettings;
 public ArrayList<Rectangle> hudButtons; 
 public ArrayList<String> hudButtonText; 
 public int sliderWidth, sliderHeight;
-public boolean hasCentralStar = false;
+
 
     public Hud(GameEngine gameEngine){
         gameEngine = this.gameEngine;
@@ -35,7 +35,7 @@ public boolean hasCentralStar = false;
         sliderBody4 = new Rectangle(520+5, 8, 10, 20);
         sliderFrame5 = new Rectangle(630, 10, sliderWidth, sliderHeight);
         sliderBody5 = new Rectangle(630+5, 8, 10, 20);
-        centralStar = new Rectangle(740,10,80,16);
+        randomSettings = new Rectangle(740,10,100,16);
         
         hudButtons.add(pauseButton);
         hudButtons.add(restartButton);
@@ -44,7 +44,7 @@ public boolean hasCentralStar = false;
         hudButtons.add(sliderFrame3);
         hudButtons.add(sliderFrame4);
         hudButtons.add(sliderFrame5);
-        hudButtons.add(centralStar);
+        hudButtons.add(randomSettings);
         hudButtonText.add("Start/Stop");
         hudButtonText.add("Restart");
         hudButtonText.add("Starting Particles");
@@ -52,7 +52,7 @@ public boolean hasCentralStar = false;
         hudButtonText.add("Starting Size");
         hudButtonText.add("Strength of G");
         hudButtonText.add("Drag coefficient");
-        hudButtonText.add("Central Star");
+        hudButtonText.add("Random Settings");
         
     }
 

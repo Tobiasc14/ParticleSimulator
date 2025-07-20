@@ -234,20 +234,14 @@ public class GameEngine extends Canvas implements Runnable{
             entityList.removeAll(entityList);
             initializeSim();
         }
-        else if(hud.centralStar.contains(mouseHandler.mouseCoords)){
-                      
-            if(!hud.hasCentralStar){
-                entityList.add(centralStar);
-            }
-            else{
-                for(int i = 0; i < entityList.size(); i++){
-                    if(entityList.get(i).name.equals("centralStar")){
-                        entityList.remove(i);
-                    }
-                }
-            }
-            hud.hasCentralStar = !(hud.hasCentralStar);  
-
+        else if(hud.randomSettings.contains(mouseHandler.mouseCoords)){  
+            numParticles = (int)(Math.random()*maxParticles);
+            averageSpeed = (Math.random()*maxSpeed);
+            averageMass= (Math.random()*maxMass);
+            G = (Math.random()*maxG);
+            drag = 1-Math.random();
+            entityList.removeAll(entityList);
+            initializeSim();
         }
 
         mouseHandler.mouseClicked = false;
