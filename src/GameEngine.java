@@ -26,6 +26,7 @@ public class GameEngine extends Canvas implements Runnable{
     Particle centralStar;
     int gameState = 1;
     int mouseFlag = 0;
+    boolean pulseColors = false;
     public int numParticles = 30;
     public double averageMass = 25;
     public double tempDistance, averageSpeed;
@@ -242,6 +243,9 @@ public class GameEngine extends Canvas implements Runnable{
             drag = 1-Math.random();
             entityList.removeAll(entityList);
             initializeSim();
+        }
+        else if(hud.pulseColors.contains(mouseHandler.mouseCoords)){  
+            pulseColors = !pulseColors;
         }
 
         mouseHandler.mouseClicked = false;

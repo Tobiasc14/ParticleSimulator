@@ -10,7 +10,7 @@ public class Hud {
 
 public GameEngine gameEngine;
 public Rectangle sliderFrame, restartButton, pauseButton, numParticles, sliderBody, sliderFrame2, sliderBody2,
-                sliderFrame3, sliderBody3,sliderFrame4, sliderBody4,sliderFrame5, sliderBody5,randomSettings;
+                sliderFrame3, sliderBody3,sliderFrame4, sliderBody4,sliderFrame5, sliderBody5,randomSettings, pulseColors;
 public ArrayList<Rectangle> hudButtons; 
 public ArrayList<String> hudButtonText; 
 public int sliderWidth, sliderHeight;
@@ -36,6 +36,7 @@ public int sliderWidth, sliderHeight;
         sliderFrame5 = new Rectangle(630, 10, sliderWidth, sliderHeight);
         sliderBody5 = new Rectangle(630+5, 8, 10, 20);
         randomSettings = new Rectangle(740,10,100,16);
+        pulseColors = new Rectangle(850,10,80,16);
         
         hudButtons.add(pauseButton);
         hudButtons.add(restartButton);
@@ -45,6 +46,7 @@ public int sliderWidth, sliderHeight;
         hudButtons.add(sliderFrame4);
         hudButtons.add(sliderFrame5);
         hudButtons.add(randomSettings);
+        hudButtons.add(pulseColors);
         hudButtonText.add("Start/Stop");
         hudButtonText.add("Restart");
         hudButtonText.add("Starting Particles");
@@ -53,6 +55,7 @@ public int sliderWidth, sliderHeight;
         hudButtonText.add("Strength of G");
         hudButtonText.add("Drag coefficient");
         hudButtonText.add("Random Settings");
+        hudButtonText.add("COLORS!!!");
         
     }
 

@@ -52,6 +52,11 @@ public class Particle extends Entity{
         //g2.fill(hitbox);        
         g2.drawOval((int)x-(sizeX/2), (int)y-(sizeY/2), sizeX, sizeY);
         g2.fillOval((int)x-(sizeX/2), (int)y-(sizeY/2), sizeX, sizeY);
+        if(gameEngine.pulseColors){
+            red = (int)(256*Math.random());
+            green = (int)(256*Math.random());
+            blue = (int)(256*Math.random()); 
+        }
         
     }
     public void updateState(){ 
